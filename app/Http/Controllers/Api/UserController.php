@@ -34,7 +34,11 @@ class UserController extends Controller
     public function create(Request $request)
     {
 
+<<<<<<< HEAD
 
+=======
+       
+>>>>>>> 7898ff4144efd01bec89a009ac1a13b7b0d058c6
 
 
 //  return response()->json($users);
