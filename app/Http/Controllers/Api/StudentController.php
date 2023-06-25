@@ -9,6 +9,8 @@ use App\Models\identity;
 use App\Models\parents;
 use App\Models\quran_episades;
 use App\Models\student;
+use App\Models\User;
+use App\Models\type_users;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 // use App\Http\Resources\Userreso;
@@ -44,45 +46,43 @@ class StudentController extends Controller
              $users->save();
              if($users){
                 return $this->apiResponse($users, message:"bbbnnnnn" ,status:201);
-
                 }
                 return $this->apiResponse(null, message:"fhjdhbhdbxb" ,status:401);
-
-
-//  return response()->json($users);
-
     }
-
-
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'Name_student' => 'required|string|max:255',
-            'Date_birth' => 'required|Date',
-            'Address' => 'required|string|max:255',
-            'Chapret' => 'required|string|max:255',
-            'School' => 'required|string|max:255',
-            'Number_identity' => 'required|digits:5',
-            'Previous_save' => 'required|string|max:255',
-            'Current_save' => 'required|string|max:255',
-            'Date_Join_Episode' => 'required|Date',
+            'name' => 'required|string|max:100',
+            'address' => 'required|string|max:50',
+            'school' => 'required|string|max:50',
+            'number_identity' => 'required|digits:5',
+            'gender' => 'required|digits:1',
+            'previous_save' => 'required|string|max:50',
+            'date_Join' => 'required|Date',
+            'birth_date' => 'required|Date',
+            ]);
 
-
-        ]);
         if($validator->fails()){
             return response()->json($validator->errors()->toJson(), 400);
         }
+        $imageName =  $request-> image -> getClientOriginalExtension();
+        $nameee=time().'.'.$imageName;
+        $path='imagesfp';
+        $request->image->move($path,$nameee);
         $students = student::insert(
-
             array_merge(
                 $validator->validated(),
-                [ 'identtity_id'=>$request->identtity_id,
-                'sex_id'=>$request->sex_id,
-        'sexual_id'=>$request->sexual_id,
-        'parents_id'=>$request->parents_id,
-        'quran_episodes_id'=>$request->quran_episodes_id,
+                [
+                'identity_id'=>$request->identity_id,
+                'nationality_id'=>$request->nationality_id,
+                'guardian_id'=>$request->guardian_id,
+                'date_Join'=>$request->date_Join,
+                'quran_episodes_id'=>$request->quran_episodes_id,
+                'users_id'=>$request->users_id,
+                'birth_date'=>$request->birth_date,
+                'image'=>$nameee
                 ]
- )
+        )
         );
 
 if($students){
@@ -95,7 +95,6 @@ if($students){
             'students' => $students
         ], 400);}
 }
-
     public function show(string $id)
     {
         $students = student::find($id);
@@ -119,44 +118,32 @@ if($students){
      */
     public function update(Request $request, $id) {
         $validator = Validator::make($request->all(), [
-            'Name_student' => 'required|string|max:255',
-            'Date_birth' => 'required|Date',
-            'Address' => 'required|string|max:255',
-            'Chapret' => 'required|string|max:255',
-            'School' => 'required|string|max:255',
-            'Number_identity' => 'required|digits:5',
-            'Previous_save' => 'required|string|max:255',
-            'Current_save' => 'required|string|max:255',
-            'Date_Join_Episode' => 'required|Date',
-
-
+            'name' => 'required|string|max:100',
+            'address' => 'required|string|max:50',
+            'school' => 'required|string|max:50',
+            'number_identity' => 'required|digits:5',
+            'gender' => 'required|digits:1',
+            'previous_save' => 'required|string|max:50',
+            'date_Join' => 'required|Date',
+            'birth_date' => 'required|Date',
         ]);
         if($validator->fails()){
             return response()->json($validator->errors()->toJson(), 400);
         }
-
         $students = student::find($id);
         if(!$students){
             return response()->json([
-                'message' => 'students not id successfully registered',
+                'message' => 'students notggggg id successfully registered',
                 'students' => $students
             ], 201);
-
-
                 }
-
-        $students->update(
-
-            array_merge(
-                    $validator->validated(),
-                    [ 'identtity_id'=>$request->identtity_id,
-                    'sex_id'=>$request->sex_id,
-            'sexual_id'=>$request->sexual_id,
-            'parents_id'=>$request->parents_id,
+        $students->update(  array_merge(
+            $validator->validated(),
+            [ 'identity_id'=>$request->identity_id,
+            'nationality_id'=>$request->nationality_id,
+            'guardian_id'=>$request->guardian_id,
             'quran_episodes_id'=>$request->quran_episodes_id,
-                    ]
-                )
-            );
+            'users_id'=>$request->users_id,  ]));
             if($students){return response()->json([
                 'message' => 'students successfully registered',
                 'students' => $students

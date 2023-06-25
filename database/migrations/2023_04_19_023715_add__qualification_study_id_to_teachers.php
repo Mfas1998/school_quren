@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::table('teachers', function (Blueprint $table) {
             $table->foreignId('qualification_study_id')->constrained('qualification_studies');
+            $table->foreignId('users_id')->constrained('users');
         });
     }
 

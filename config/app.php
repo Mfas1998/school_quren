@@ -186,6 +186,8 @@ return [
          */
         // Tymon\JWTAuth\Providers\LaravelServiceProvider::class,
         Tymon\JWTAuth\Providers\LaravelServiceProvider::class,
+        FaizShukri\Quran\QuranServiceProvider::class,
+
 
         /*
          * Package Service Providers...
@@ -199,6 +201,9 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+        Spatie\Permission\PermissionServiceProvider::class,
+        Intervention\Image\ImageServiceProvider::class
+
 
     ],
 
@@ -217,6 +222,10 @@ return [
         'JWTAuth' => Tymon\JWTAuth\Facades\JWTAuth::class,
         'JWTFactory' => Tymon\JWTAuth\Facades\JWTFactory::class,
         // 'ExampleClass' => App\Example\ExampleClass::class,
+        'Quran' => FaizShukri\Quran\Facades\Quran::class,
+        'Image' => Intervention\Image\Facades\Image::class
+
+
     ])->toArray(),
 
 ];

@@ -13,22 +13,20 @@ return new class extends Migration
     {
         Schema::create('students', function (Blueprint $table) {
             $table->id();
-            $table->String('Name_student');
-            $table->Date('Date_birth');
-            $table->String('Address');
-            $table->String('Chapret');
-            $table->String('School');
-            $table->foreignId('identtity_id')->constrained('identities');
-            $table->integer('Number_identity');
-            $table->foreignId('sex_id')->constrained('sexes');
-            $table->foreignId('sexual_id')->constrained('sexuals');
-            $table->foreignId('parents_id')->constrained('parents');
-            $table->String('Previous_save');
-            $table->String('Current_save');
-            $table->Date('Date_Join_Episode');
-            $table->foreignId('quran_episodes_id')->constrained('quran_episades');
-   
-
+            $table->String('name');
+            $table->String('address');
+            $table->String('school');
+            $table->foreignId('identity_id')->constrained('identities');
+            $table->integer('number_identity');
+            $table->integer('gender');
+            $table->foreignId('nationality_id')->constrained('Nationality');
+            $table->foreignId('guardian_id')->constrained('guardian');
+            $table->String('previous_save');
+            $table->Date('date_Join');
+            $table->foreignId('quran_episodes_id')->constrained('quran_episodes');
+            $table->foreignId('users_id')->constrained('users');
+            $table->string('image');
+            $table->Date('birth_date');
             $table->timestamps();
         });
     }

@@ -17,11 +17,11 @@ class identity extends Model
     // }
     protected $table ='identities';
     protected $fillable = [
-        // 'id',
+        'id',
     'type_identity'];
-    public function  parents(){
-        return $this->hasMany(parents::class,'identtity_id','id');
-    }
+    // public function  parents(){
+    //     return $this->hasMany(parents::class,'identtity_id','id');
+    // }
 public function  student(){
         return $this->hasMany(student::class,'identity_id','id');
     }

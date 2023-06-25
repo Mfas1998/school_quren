@@ -1,10 +1,16 @@
 <?php
 namespace App\Models;
-use App\Models\type_user;
-use Illuminate\Contracts\Auth\MustVerifyEmail;
+//use App\Models\type_users;
+use App\Models\student;
+use App\Models\teacher;
+use App\Models\guardian;
+//use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Laravel\Sanctum\HasApiTokens;
+use Spatie\Permission\Traits\HasRoles;
+use Storage;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 
 /**
@@ -12,7 +18,7 @@ use Tymon\JWTAuth\Contracts\JWTSubject;
  */
 class User extends Authenticatable implements JWTSubject
 {
-    use HasFactory, Notifiable;
+    use HasApiTokens,HasRoles,HasFactory, Notifiable;
     /**
      * The attributes that are mass assignable.
      *
@@ -22,11 +28,25 @@ class User extends Authenticatable implements JWTSubject
         'id',
         'name',
         'email',
+        //'status',
+        'phone',
+        // 'birth_Data',
+      //  'role',
         'password',
         'type_user_id',
+
     ];
-    public function type_user(){
-                return $this->belongsTo( type_user::class,'type_user_id','id');
+    // public function type_user(){
+    //             return $this->belongsTo( type_users::class,'type_user_id','id');
+    //             }
+    public function  teathers(){
+                    return $this->hasMany(teacher::class,'users_id','id');
+                }
+    public function  students(){
+                    return $this->hasMany(student::class,'users_id','id');
+                }
+public function  guardian(){
+                    return $this->hasMany(guardian::class,'users_id','id');
                 }
     /**
      * The attributes that should be hidden for arrays.
@@ -62,30 +82,8 @@ class User extends Authenticatable implements JWTSubject
     public function getJWTCustomClaims() {
         return [];
     }
-    // public function type_user(){
-    //             return $this->belongsTo( type_user::class,'type_user_id','id');
-    //             }
+    public function gitImageUrlAttribute(){
+                return Storage::disk('imagesfp')->url($this->image);
+
+                }
 }
-
-// namespace App\Models;
-// use App\Models\type_user;
-
-// use Illuminate\Database\Eloquent\Factories\HasFactory;
-// use Illuminate\Database\Eloquent\Model;
-
-// class user extends Model
-// {
-//     use HasFactory;
-//     protected $table='users';
-//     protected $fillable =[
-
-//             'name',
-//             'email',
-//             'password',
-//             'password2',
-//             'type_user_id',
-//     ];
-//     public function type_user(){
-//         return $this->belongsTo( type_user::class,'type_user_id','id');
-//         }
-// }

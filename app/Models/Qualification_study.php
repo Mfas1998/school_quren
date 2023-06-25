@@ -13,8 +13,8 @@ class Qualification_study extends Model
          'name_qualification',
  ];
     use HasFactory;
-    
+
     public function teache(){
-        return $this ->hasMany(Qualification_study::class, foreignKey: 'Qualification_study_id');
+        return $this ->hasMany(Qualification_study::class, foreignKey: 'qualification_study_id');
     }
 }

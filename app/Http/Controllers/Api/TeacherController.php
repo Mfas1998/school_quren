@@ -3,10 +3,12 @@
 namespace App\Http\Controllers\Api;
 // use App\Http\Controllers\Api\ApiResponseTrait;
 use App\Http\Controllers\Controller;
-use App\Models\sex;
-use App\Models\sexual;
+// use App\Models\sex;
+use App\Models\nationality;
 use App\Models\identity;
 use App\Models\teacher;
+use App\Models\User;
+use App\Models\type_users;
 use App\Models\Qualification_study;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -27,14 +29,12 @@ class TeacherController extends Controller
 
     public function create(Request $request)
     {
-
         $validator=validator::make($request->all(),[
             'name'=>'required|varchar|max:255',]);
             if($validator->fails()){
                 return $this->apiResponse(null, $validator->errors(),status:400);
-            }
-            $users=new sex();
-            $users=new sexual();
+            } $users=new User();
+
             $users=new identity();
         $users=new Qualification_study();
         $users->type_users=$request->input('type_users');
@@ -49,57 +49,34 @@ class TeacherController extends Controller
 //  return response()->json($users);
 
     }
-
-
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'Name_tracher' => 'required|string|max:255',
-            'Date_birth' => 'required|Date',
-            'Qualification' => 'required|string|max:255',
-            'Work' => 'required|string|max:255',
-            'Salary' => 'required|min:4',
-            'phone' => 'required|digits:9',
-            'Email' => 'required|email|max:100|unique:users',
-            'Teaching_years' => 'required|date',
-            'Center_they_work' => 'required|string|max:255',
-            'Address' => 'required|string|max:255',
-            'Number_identity' => 'required|digits:9',
+            'name' => 'required|string|max:100',
+            'qualification' => 'required|string|max:70',
+            'work' => 'required|string|max:100',
+            'salary' => 'required|min:4',
+            'teaching_years' => 'required|date',
+            'center_they_work' => 'required|string|max:100',
+            'address' => 'required|string|max:50',
+            'number_identity' => 'required|digits_between:5,20',
+            'gender' => 'required|digits:1',
+            'birth_date' => 'required|date',
         ]);
 
         if($validator->fails()){
             return response()->json($validator->errors()->toJson(), 400);
         }
-
-
-
         $teachers = teacher::insert(
-            // array_merge(
-            //     $validator->validated(),
-            //     [
-            //         'identtity_id'=>$request->identtity_id,
-            //     'sex_id'=>$request->sex_id,
-            //     'sexual_id'=>$request->sexual_id,
-            //                 'qualification_study_id'=>$request->qualification_study_id,
-            //     ]
-            // )
-            [  'Name_tracher'=>$request->Name_tracher,
-            'Date_birth'=>$request->Date_birth,
-            'Qualification'=>$request->Qualification,
-            'Work'=>$request->Work,
-            'Salary'=>$request->Salary,
-            'phone'=>$request->phone,
-            'Email'=>$request->Email,
-            'Teaching_years'=>$request->Teaching_years,
-            'Center_they_work'=>$request->Center_they_work,
-            'Address'=>$request->Address,
-            'identtity_id'=>$request->identity_id,
-            'Number_identity'=>$request->Number_identity,
-            'sex_id'=>$request->sex_id,
-            'sexual_id'=>$request->sexual_id,
-            'qualification_study_id'=>$request->qualification_study_id,]
-
-
+            array_merge(
+                $validator->validated(), [
+                    // 'teaching_years'=>$request->teaching_years,
+                'identity_id'=>$request->identtity_id,
+                'nationality_id'=>$request->nationality_id,
+                'qualification_study_id'=>$request->qualification_study_id,
+                'users_id'=>$request->users_id,
+                ]
+            )
         );
 
 if($teachers){
@@ -108,7 +85,7 @@ if($teachers){
             'teachers' => $teachers
         ], 201);}
        else{ return response()->json([
-            'message' => 'teachers nut successfully registered',
+            'message' => 'teachers not successfully registered',
             'parents' => $teachers
         ], 400);}
 
@@ -138,17 +115,16 @@ if($teachers){
      */
     public function update(Request $request, $id) {
         $validator = Validator::make($request->all(), [
-            'Name_tracher' => 'required|string|max:255',
-            'Date_birth' => 'required|Date',
-            'Qualification' => 'required|string|max:255',
-            'Work' => 'required|string|max:255',
-            'Salary' => 'required|min:4',
-            'phone' => 'required|digits:9',
-            'Email' => 'required|email|max:100|unique:users',
-           'Teaching_years' => 'required|date',
-            'Center_they_work' => 'required|string|max:255',
-            'Address' => 'required|string|max:255',
-            'Number_identity' => 'required|digits:9',
+            'name' => 'required|string|max:100',
+            'qualification' => 'required|string|max:70',
+            'work' => 'required|string|max:100',
+            'salary' => 'required|min:4',
+            'teaching_years' => 'required|date',
+            'center_they_work' => 'required|string|max:100',
+            'address' => 'required|string|max:50',
+            'number_identity' => 'required|digits_between:5,20',
+            'gender' => 'required|digits:1',
+            'birth_date' => 'required|date',
         ]);
 
         if($validator->fails()){
@@ -162,32 +138,12 @@ if($teachers){
             ], 201);
                 }
 
-        $teachers->update(
-            [  'Name_tracher'=>$request->Name_tracher,
-            'Date_birth'=>$request->Date_birth,
-            'Qualification'=>$request->Qualification,
-            'Work'=>$request->Work,
-            'Salary'=>$request->Salary,
-            'phone'=>$request->phone,
-            'Email'=>$request->Email,
-            'Teaching_years'=>$request->Teaching_years,
-            'Center_they_work'=>$request->Center_they_work,
-            'Address'=>$request->Address,
-            'identtity_id'=>$request->identity_id,
-            'Number_identity'=>$request->Number_identity,
-            'sex_id'=>$request->sex_id,
-            'sexual_id'=>$request->sexual_id,
-            'qualification_study_id'=>$request->qualification_study_id,]
-            // array_merge(
-            //         $validator->validated(),
-            //         [
-            //             'identtity_id'=>$request->identtity_id,
-            //         'sex_id'=>$request->sex_id,
-            //         'sexual_id'=>$request->sexual_id,
-            //                     'qualification_study_id'=>$request->qualification_study_id,
-            //         ]
-            //     )
-            );
+        $teachers->update(   $validator->validated(), [
+            'identity_id'=>$request->identtity_id,
+            'nationality_id'=>$request->nationality_id,
+            'qualification_study_id'=>$request->qualification_study_id,
+            'users_id'=>$request->users_id,]
+        );
             if($teachers){return response()->json([
                 'message' => 'teachers successfully registered',
                 'teachers' => $teachers

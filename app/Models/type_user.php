@@ -1,11 +1,11 @@
 <?php
-
 namespace App\Models;
 use App\Models\user;
-
+use App\Models\type_users;
+use App\Models\student;
+use App\Models\teacher;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-
 class type_user extends Model
 {
     use HasFactory;
@@ -23,9 +23,10 @@ class type_user extends Model
 
 
 ];
-public function users(){
-    return $this ->hasMany(user::class, 'type_user_id','id');
-}
+// public function users(){
+//     return $this ->hasMany(user::class, 'type_user_id','id');
+// }
+
 
 // public function student(){
 //         return $this->belongsTo('App\Models\student', 'ID_sex');

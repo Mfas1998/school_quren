@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('identities', function (Blueprint $table) {
             $table->id();
-            $table->string('type_identity', 100);
+            $table->string('type_identity');
             $table->timestamps();
         });
     }

@@ -1,11 +1,11 @@
 <?php
-use App\Http\Controllers\SexController;
+use App\Http\Controllers\auth\SexController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\QuranEpisadesController;
-use App\Http\Controllers\TeacherController;
-use App\Http\Controllers\ParentsController;
-use App\Http\Controllers\StudentController;
-use App\Http\Controllers\UserController;
+use App\Http\Controllers\auth\TeacherController;
+use App\Http\Controllers\auth\ParentsController;
+use App\Http\Controllers\auth\StudentController;
+use App\Http\Controllers\auth\UserController;
 
 /*
 
@@ -37,6 +37,9 @@ Route::get('quran/delete/all/Truncate','deleteTruncate')->name(name: 'quran.dele
 });
 
 
+Route::get('student',function(){
+    return 'hello student';
+})->middleware('auth');
 Route::get('/', function () {
     return view('welcome');
 });

@@ -16,9 +16,10 @@ return new class extends Migration
             $table->string('name');
             $table->string('email')->unique();
           //  $table->timestamp('email_verified_at')->nullable();
+            $table->integer('phone');
             $table->string('password');
-             $table->foreignId('type_user_id')->constrained('type_users');
-             //$table->rememberToken();
+            $table->integer('type_user_id');
+            //  $table->foreignId('type_user_id')->constrained('type_users');
             $table->timestamps();
         });
     }

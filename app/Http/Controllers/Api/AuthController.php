@@ -9,7 +9,7 @@ use App\Http\Resources\Userreso;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 // use Illuminate\Support\Facades\Validator;
-// use App\Http\Resources\Userreso;
+use App\Notifications\LoginNotification;
 /**
  * AuthController
  */
@@ -41,6 +41,7 @@ class AuthController extends Controller
         if (! $token = auth()->attempt($validator->validated())) {
             return response()->json(['error' => 'Unauthorized'], 401);
         }
+
         return $this->createNewToken($token);
     }
     /**
@@ -50,20 +51,20 @@ class AuthController extends Controller
      */
     public function register(Request $request) {
         $validator = Validator::make($request->all(), [
-            'name' => 'required|string|between:2,100',
+            'name' => 'required|string|between:3,100',
             'email' => 'required|string|email|max:100|unique:users',
-            'password' => 'required|string|confirmed|min:6',
-        //   'type_user_id' => 'required|integar|max=20',
-
+            'phone' => 'required|digits_between:5,20|unique:users,phone',
+            'password' => 'required|string|confirmed|min:6|unique:users,phone,password',
+             'type_user_id' => 'required|digits:1',
         ]);
         if($validator->fails()){
             return response()->json($validator->errors()->toJson(), 400);
         }
-        $users=type_user::find($request->type_user_id);
+        // $users=type_user::find($request->type_user_id);
         $user = User::create(array_merge(
                     $validator->validated(),
                     ['password' => bcrypt($request->password),
-                    'type_user_id'=>$request->type_user_id
+                    //'type_user_id'=>$request->type_user_id
                     ]
                 ));
         return response()->json([
@@ -122,9 +123,9 @@ class AuthController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    // public function refresh() {
-    //     return $this->createNewToken(auth()->refresh());
-    // }
+    public function refresh() {
+        return $this->createNewToken(auth()->refresh());
+    }
     /**
      * Get the authenticated User.
      *

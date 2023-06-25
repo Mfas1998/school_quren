@@ -1,12 +1,10 @@
 <?php
-
 namespace App\Models;
 use App\Models\identity;
-use App\Models\sex;
-use App\Models\sexual;
-use App\Models\parents;
-use App\Models\quran_episades;
-
+use App\Models\nationality;
+use App\Models\guardian;
+use App\Models\quran_episod;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -16,38 +14,37 @@ class student extends Model
 
     protected $fillable = [
        ' id',
-       'Name_student',
-        'Date_birth	',
-'Address',
-'Chapret',
-'School',
-'identtity_id',
-'Number_identity',
-'sex_id',
-'sexual_id',
-'parents_id',
-'Previous_save',
-'Current_save',
-'Date_Join_Episode',
-'quran_episodes_id',
-       ];
-    // public function sex(){
-    //     return $this->belongsTo('App\models\sex','ID_sex');
-    // }
+       'name',
+        'address	',
+        'school',
+        'identity_id',
+        'number_identity',
+        'gender',
+        'nationality_id',
+        'guardian_id',
+        'previous_save',
+        'date_Join',
+        'quran_episodes_id',
+        'users_id',
+        'image',
+        'birth_date',
+           ];
+
     public function  identity(){
-        return $this->belongsTo(identity::class,'identtity_id','id');
+        return $this->belongsTo(identity::class,'identity_id','id');
     }
-    public function  sex(){
-        return $this->belongsTo(sex::class,'sex_id','id');
-    }
-    public function  sexual(){
-        return $this->belongsTo(sexual::class,'sexual_id','id');
+
+    public function  nationality(){
+        return $this->belongsTo(nationality::class,'nationality_id','id');
     }
     public function  parents(){
-        return $this->belongsTo(parents::class,'parents_id','id');
+        return $this->belongsTo(guardian::class,'guardian_id','id');
     }
-    public function  quran_episades(){
-        return $this->belongsTo(quran_episades::class,'quran_episodes_id','id');
+    public function  quran_episod(){
+        return $this->belongsTo(quran_episod::class,'quran_episodes_id','id');
+    }
+    public function  userss(){
+        return $this->belongsTo(User::class,'users_id','id');
     }
 
     // public function sexone(){
@@ -56,5 +53,26 @@ class student extends Model
     //     public function sexto(){
     //             return $this->belongsTo('App\models\sex','id');
     //         }
+
+     /**
+     * Get the identifier that will be stored in the subject claim of the JWT.
+     *
+     * @return mixed
+     */
+    public function getJWTIdentifier() {
+        return $this->getKey();
+    }
+    /**
+     * Return a key value array, containing any custom claims to be added to the JWT.
+     *
+     * @return array
+     */
+    public function getJWTCustomClaims() {
+        return [];
+    }
+    public function gitImageUrlAttribute(){
+                return Storage::disk('imagesfp')->url($this->image);
+
+                }
 
 }

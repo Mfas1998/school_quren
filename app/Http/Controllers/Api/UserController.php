@@ -3,12 +3,16 @@
 namespace App\Http\Controllers\Api;
 // use App\Http\Controllers\Api\ApiResponseTrait;
 use App\Http\Controllers\Controller;
-use App\Models\type_user;
+// use App\Models\type_user;
 use App\Models\user;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
+//use Illuminate\Support\Facades\Validator;
+//use Illuminate\Suppor\Str;
+use Illuminate\Support\Facades\Storage;
 // use App\Http\Resources\Userreso;
-;
+use Hash;
+use App\Http\Requests\Auth\ProfileUpdateRequest;
+
 class UserController extends Controller
 {
     // use ApiResponseTrait;
@@ -30,22 +34,7 @@ class UserController extends Controller
     public function create(Request $request)
     {
 
-        // $validato=validator::make($request->all(),[
-        //     'name'=>'required|varchar|max:255|unique',]);
-        //     if($validato->fails()){
-        //         return $this->apiResponse(null, $validato->errors(),status:402);
-        //     }
-        $users=new type_user();
-        $users->type_users=$request->input('type_users');
-             $users->save();
-             if($users){
-                return response()->json([
-                    'message' => 'User successfully registered',
-                    'user' => $users
-                ], 200);
 
-                }
-                return $this->apiResponse(null, message:"fhjdhbhdbxb" ,status:401);
 
 
 //  return response()->json($users);
@@ -53,34 +42,30 @@ class UserController extends Controller
     }
 
 
-    public function store(Request $request)
+    public function store(ProfileUpdateRequest $request)
     {
-        $validator = Validator::make($request->all(), [
-            'name' => 'required|string|between:2,100',
-            'email' => 'required|string|email|max:100|unique:users',
-            'password' => 'required|string|confirmed|min:6',
-        //   'type_user_id' => 'required|integar|max=20',
-
-        ]);
-        if($validator->fails()){
-            return response()->json($validator->errors()->toJson(), 400);
-        }
-        $users=type_user::find($request->type_user_id);
+        //$user=$request->User();
+        $validateData=$request->validated();
+       // $validateData['password']=Hash::make($validateData['password']);
         $user = User::create(
-            array_merge(
-                    $validator->validated(),
-                    ['password' => bcrypt($request->password),
-                    'type_user_id'=>$request->type_user_id
-                    ]                )
-                );
-                if($user){
-                    return response()->json([
+                [   'name'=>$request->name,
+                    'email'=>$request->email,
+                    'phone'=>$request->phone,
+                    'password' => bcrypt($request->password),
+                'type_user_id'=>$request->type_user_id
+                ]
+            );
+
+
+//Storage::disk('public')->put($imageName,file_get_contents($request->image));
+                 if($user){   return response()->json([
             'message' => 'User successfully registered',
             'user' => $user
-        ], 201);}
-                   else{ return response()->json([
+        ], 201);
+    }
+                  else{ return response()->json([
             'message' => 'User successfully registered',
-            'user' => $user
+            'user' => null
         ], 201);}
 
     //
@@ -107,17 +92,8 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, $id) {
-        $validator = Validator::make($request->all(), [
-            'name' => 'required|string|between:2,100',
-            'email' => 'required|string|email|max:100|unique:users',
-            'password' => 'required|string|confirmed|min:6',
-        //   'type_user_id' => 'required|integar|max=20',
-
-        ]);
-        if($validator->fails()){
-            return response()->json($validator->errors()->toJson(), 400);
-        }
+    public function update(ProfileUpdateRequest $request, $id) {
+        $validateData=$request->validated();
         $user = User::find($id);
         if(!$user){
             return response()->json([
@@ -126,14 +102,12 @@ class UserController extends Controller
             ], 201);
         }
         $user->update(
-            // $request->all()
-            array_merge(
-                    $validator->validated(),
-                    ['password' => bcrypt($request->password),
-                    'type_user_id'=>$request->type_user_id
-                    ]
-                )
-            );
+            [   'name'=>$request->name,
+            'email'=>$request->email,
+            'phone'=>$request->phone,
+            'password' => bcrypt($request->password),
+        'type_user_id'=>$request->type_user_id
+        ] );
             if($user){return response()->json([
                 'message' => 'User successfully registered',
                 'user' => $user
