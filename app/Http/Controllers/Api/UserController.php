@@ -30,22 +30,7 @@ class UserController extends Controller
     public function create(Request $request)
     {
 
-        // $validato=validator::make($request->all(),[
-        //     'name'=>'required|varchar|max:255|unique',]);
-        //     if($validato->fails()){
-        //         return $this->apiResponse(null, $validato->errors(),status:402);
-        //     }
-        $users=new type_user();
-        $users->type_users=$request->input('type_users');
-             $users->save();
-             if($users){
-                return response()->json([
-                    'message' => 'User successfully registered',
-                    'user' => $users
-                ], 200);
-
-                }
-                return $this->apiResponse(null, message:"fhjdhbhdbxb" ,status:401);
+       
 
 
 //  return response()->json($users);
