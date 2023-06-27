@@ -9,16 +9,20 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
-use Spatie\Permission\Traits\HasRoles;
+// use Spatie\Permission\Traits\HasRoles;
 use Storage;
 use Tymon\JWTAuth\Contracts\JWTSubject;
+use Laratrust\Contracts\LaratrustUser;
+use Laratrust\Traits\HasRolesAndPermissions;
+// use Illuminate\Foundation\Auth\User as Authenticatable;
 
 /**
  * User
  */
-class User extends Authenticatable implements JWTSubject
+class User extends Authenticatable implements  JWTSubject,LaratrustUser
 {
-    use HasApiTokens,HasRoles,HasFactory, Notifiable;
+    use HasApiTokens,HasFactory, Notifiable;
+    use HasRolesAndPermissions;
     /**
      * The attributes that are mass assignable.
      *
