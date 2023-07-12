@@ -1,5 +1,6 @@
 <?php
 use Illuminate\Http\Request;
+use Illuminate\Foundation\Auth\User;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\UserController;
@@ -35,15 +36,26 @@ Route::group([
 Route::controller(UserController::class)->group( function () {
 Route::get('/users','index');
 Route::get('/user/{id}','show');
-Route::post('/user','create');
-
 Route::post('/users/store','store');
 Route::post('/userss/{id}','update');
 Route::get('user/destroy/{id}','destroy');
 Route::get('user/destroy/all/Truncate','deleteTruncate');
 });
+<<<<<<< HEAD
 Route::get('/shownam', function(){$user = User::max('id');
   return $user;});
+=======
+
+
+
+Route::get('/shownam' ,function () {
+    $user = User::max('id');
+    return $user;
+});
+
+
+
+>>>>>>> 0322e0de8d59da88f1507e911c827f241e3c2629
 Route::resource('sex', SexController::class);
 
 Route::middleware(['jwt_verify'])->controller(Quran_EpisodesController::class)->group( function ($id) {
@@ -74,4 +86,5 @@ Route::get('guardian/destroy/{id}','destroy');
 Route::get('guardian/delete/all/Truncate','deleteTruncate');
 // Route::get('parent/delete/all/Truncate','deleteTruncate')->name(name: 'parent.delete.all.Truncate');
 });
+
 
