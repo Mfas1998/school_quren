@@ -1,165 +1,69 @@
 <?php
-
 namespace App\Http\Controllers\Api;
 // use App\Http\Controllers\Api\ApiResponseTrait;
 use App\Http\Controllers\Controller;
-// use App\Models\type_user;
 use App\Models\user;
 use Illuminate\Http\Request;
-//use Illuminate\Support\Facades\Validator;
-//use Illuminate\Suppor\Str;
-use Illuminate\Support\Facades\Storage;
+// use Illuminate\Support\Facades\Validator;
+use App\Http\Requests\Auth\UsersRequest;
 // use App\Http\Resources\Userreso;
-use Hash;
-use App\Http\Requests\Auth\ProfileUpdateRequest;
 
 class UserController extends Controller
 {
-    // use ApiResponseTrait;
+    use ApiResponseTrait;
     public function index()
-    {
-        // $users=userreso ::collection(user::get());
-        $users=user::get();
-        return response()->json([
-            'message' => 'User successfully registered',
-            'user' => $users
-        ], 200);
-//  return $this->apiResponse($users, message:null ,status:200);
-
-//return $this->apiResponse()
-    //    return $this ->apiResponse(data:$users, message:'ok',status: 200);
+    {  $users=user::with('students')->get();
+        return response()->json(['message' => 'User successfully registered','user' => $users], 200);
     }
+    /*** Show the form for creating a new resource.*/
+    public function create(Request $request) {}
+    /*** Store a newly created resource in storage.*/
 
 
-    public function create(Request $request)
-    {
-
-// <<<<<<< HEAD
-
-// =======
-
-// >>>>>>> 7898ff4144efd01bec89a009ac1a13b7b0d058c6
-
-
-//  return response()->json($users);
-
+    public function store(UsersRequest $request)
+    {$user = User::create($request->validated(),['password' => bcrypt($request->password)]);
+        if($user){$user->addRole($request->user_role);
+             return response()->json([
+            'message' => 'User successfully registered','user' => $user], 201);
+             }
+        else{ return response()->json([
+            'message' => 'User not successfully registered','user' => null], 201);}
     }
-
-
-    public function store(ProfileUpdateRequest $request)
-    {
-        //$user=$request->User();
-        $validateData=$request->validated();
-       // $validateData['password']=Hash::make($validateData['password']);
-        $user = User::create(
-                [   'name'=>$request->name,
-                    'email'=>$request->email,
-                    'phone'=>$request->phone,
-                    'password' => bcrypt($request->password),
-                'type_user_id'=>$request->type_user_id
-                ]
-            );
-
-
-//Storage::disk('public')->put($imageName,file_get_contents($request->image));
-                 if($user){   return response()->json([
-            'message' => 'User successfully registered',
-            'user' => $user
-        ], 201);
-    }
-                  else{ return response()->json([
-            'message' => 'User successfully registered',
-            'user' => null
-        ], 201);}
-
-    //
-}
-
     public function show(string $id)
-    {
+    {   $users=userreso ::collection(user::with('students')->get());
+        return $this->apiResponse($users, message:"ko" ,status:200);
+
+        // if($user){return response()->json(['message' => 'User not id successfully registered',
+        //         'user' => $user], 201);}
+    }
+    public function edit(string $id) {}
+
+    public function update(UsersRequest $request, $id) {
         $user = User::find($id);
-        if($user){
-            return response()->json([
-                'message' => 'User not id successfully registered',
-                'user' => $user
-            ], 201);
-            }
+        if(!$user){ return response()->json(['message' => 'User not id successfully registered',
+                'user' => $user], 201);}
+        $user->update($request->validated,['password' => bcrypt($request->password)]);
+        if($user){   return response()->json([
+            'message' => 'User successfully registered','user' => $user  ], 201);    }
+        else{ return response()->json([
+            'message' => 'User not successfully registered','user' => null], 401);}
     }
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(ProfileUpdateRequest $request, $id) {
-        $validateData=$request->validated();
-        $user = User::find($id);
-        if(!$user){
-            return response()->json([
-                'message' => 'User not id successfully registered',
-                'user' => $user
-            ], 201);
-        }
-        $user->update(
-            [   'name'=>$request->name,
-            'email'=>$request->email,
-            'phone'=>$request->phone,
-            'password' => bcrypt($request->password),
-        'type_user_id'=>$request->type_user_id
-        ] );
-            if($user){return response()->json([
-                'message' => 'User successfully registered',
-                'user' => $user
-            ], 201);}
-        return response()->json([
-            'message' => 'User not successfully registered',
-            'user' => $user
-        ], 400);
-
-    }
-
-
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(string $id)
-    {
-        $user = User::find($id);
-        if(!$user){
-            return response()->json([
-                'message' => 'User not id successfully registered',
-                'user' => $user
-            ], 201);
-                }
-
+    { $user = User::find($id);
+        if(!$user){ return response()->json(['message' => 'User not id successfully registered',
+            'user' => $user], 201);}
         $user->delete($id);
-            if($user){return response()->json([
-                'message' => 'User successfully registered',
-                'user' => $user
-            ], 201);}
-        return response()->json([
-            'message' => 'User not successfully registered',
-            'user' => $user
-        ], 400);
-
+        if($user){   return response()->json([
+            'message' => 'User successfully registered','user' => $user  ], 201);    }
+        else{ return response()->json([
+            'message' => 'User not successfully registered','user' => null], 401);}
     }
     public function deleteTruncate(string $id)
     {
         $user = User::Truncate();;
-
-            if($user){return response()->json([
-                'message' => 'User successfully registered',
-                'user' => $user
-            ], 201);}
-        return response()->json([
-            'message' => 'User not successfully registered',
-            'user' => $user
-        ], 400);
-
+        if($user){   return response()->json([
+            'message' => 'User successfully registered','user' => $user  ], 201);    }
+        else{ return response()->json([
+            'message' => 'User not successfully registered','user' => null], 401);}
     }
 }
