@@ -14,12 +14,9 @@ return new class extends Migration
         Schema::create('guardian', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-
             $table->integer('gender');
-            // $table->foreignId('phone_id')->constrained('phone');
             $table->string('job');
             $table->string('social_status');
-            // $table->foreignId('users_id')->constrained('users');
             $table->timestamps();
 
         });
