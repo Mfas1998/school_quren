@@ -32,9 +32,9 @@ class ProfileUpdateRequest extends FormRequest
             // //'image'=>'required|image|mimes:jpg,png,jpeg,webp','max:2048',
             'name' => 'required|string|between:3,100',
             'email' => 'required|string|email|max:100|unique:users',
-            'phone' => 'required|digits_between:5,20|unique:users,phone',
+            // 'phone' => 'required|digits_between:5,20|unique:users,phone',
             'password' => 'required|string|confirmed|min:6|unique:users,phone,password',
-             'type_user_id' => 'required|digits:1',
+            //  'type_user_id' => 'required|digits:1',
         ];
     }
 }

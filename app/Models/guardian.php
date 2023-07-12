@@ -20,7 +20,7 @@ class guardian extends Model
         'gender',
         // 'Phone',
         'job',
-        'link_kinship',
+   
         'social_status',
         'users_id',
 

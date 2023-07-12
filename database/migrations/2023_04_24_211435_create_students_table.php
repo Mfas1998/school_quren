@@ -21,6 +21,7 @@ return new class extends Migration
             $table->integer('gender');
             $table->foreignId('nationality_id')->constrained('Nationality');
             $table->foreignId('guardian_id')->constrained('guardian');
+            $table->string('link_kinship');
             $table->String('previous_save');
             $table->Date('date_Join');
             $table->foreignId('quran_episodes_id')->constrained('quran_episodes');

@@ -30,15 +30,10 @@ class User extends Authenticatable implements  JWTSubject,LaratrustUser
      */
     protected $fillable = [
         'id',
-        'name',
+        'user_name',
         'email',
-        //'status',
         'phone',
-        // 'birth_Data',
-      //  'role',
         'password',
-        'type_user_id',
-
     ];
     // public function type_user(){
     //             return $this->belongsTo( type_users::class,'type_user_id','id');

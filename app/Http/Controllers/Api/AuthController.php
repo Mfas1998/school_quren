@@ -5,11 +5,11 @@ use auth;
 use App\Models\User;
 use App\Models\type_user;
 use Illuminate\Http\Request;
-use App\Http\Resources\Userreso;
+// use App\Http\Resources\Userreso;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 // use Illuminate\Support\Facades\Validator;
-use App\Notifications\LoginNotification;
+// use App\Notifications\LoginNotification;
 /**
  * AuthController
  */
@@ -55,7 +55,7 @@ class AuthController extends Controller
             'email' => 'required|string|email|max:100|unique:users',
             'phone' => 'required|digits_between:5,20|unique:users,phone',
             'password' => 'required|string|confirmed|min:6|unique:users,phone,password',
-             'type_user_id' => 'required|digits:1',
+            //  'type_user_id' => 'required|digits:1',
         ]);
         if($validator->fails()){
             return response()->json($validator->errors()->toJson(), 400);
