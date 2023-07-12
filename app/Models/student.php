@@ -20,8 +20,10 @@ class student extends Model
         'identity_id',
         'number_identity',
         'gender',
+
         'nationality_id',
         'guardian_id',
+        'link_kinship',
         'previous_save',
         'date_Join',
         'quran_episodes_id',

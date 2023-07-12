@@ -42,6 +42,8 @@ Route::post('/userss/{id}','update');
 Route::get('user/destroy/{id}','destroy');
 Route::get('user/destroy/all/Truncate','deleteTruncate');
 });
+Route::get('/shownam', function(){$user = User::max('id');
+  return $user;});
 Route::resource('sex', SexController::class);
 
 Route::middleware(['jwt_verify'])->controller(Quran_EpisodesController::class)->group( function ($id) {

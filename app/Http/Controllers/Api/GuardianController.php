@@ -34,7 +34,7 @@ class GuardianController extends Controller
             'name' => 'required|string|between:3,100',
              'gender' => 'required|digits:1',
             'job' => 'required|string|max:100',
-            'link_kinship' => 'required|string|max:100',
+
             'social_status' => 'required|string|max:100',
         ]);
         if($validator->fails()){
@@ -85,7 +85,6 @@ class GuardianController extends Controller
             'name' => 'required|string|between:3,100',
              'gender' => 'required|digits:1',
             'job' => 'required|string|max:100',
-            'link_kinship' => 'required|string|max:100',
             'social_status' => 'required|string|max:100',
         ]);
         if($validator->fails()){

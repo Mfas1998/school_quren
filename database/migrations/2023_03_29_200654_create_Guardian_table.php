@@ -18,7 +18,6 @@ return new class extends Migration
             $table->integer('gender');
             // $table->foreignId('phone_id')->constrained('phone');
             $table->string('job');
-            $table->string('link_kinship');
             $table->string('social_status');
             // $table->foreignId('users_id')->constrained('users');
             $table->timestamps();
