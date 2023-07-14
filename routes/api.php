@@ -22,6 +22,12 @@ Route::get('student/delete/all/Truncate','deleteTruncate');
 });
 Route::get('/update_user_role', [appsettingscontroller::class, 'updeteUserRole']);
 Route::get('/user_generateRoles', [appsettingscontroller::class, 'generateRoles']);
+Route::get('/generateIdentity', [appsettingscontroller::class, 'generateIdentity']);
+Route::get('/generateNationality', [appsettingscontroller::class, 'generateNationality']);
+Route::get('/generateQualification_study', [appsettingscontroller::class, 'generateQualification_study']);
+Route::get('/generatejop', [appsettingscontroller::class, 'generatejop']);
+Route::get('/generateGender', [appsettingscontroller::class, 'generateGender']);
+Route::get('/generateٍٍٍSystem_Spisod', [appsettingscontroller::class, 'generateٍٍٍSystem_Spisod']);
 Route::group([
         'middleware'=>'api',
     'prefix' => 'auth'
