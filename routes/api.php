@@ -11,7 +11,7 @@ use App\Http\Controllers\api\appsettingscontroller;
 use App\Http\Controllers\Api\Quran_EpisodesController;
 //use App\Http\Controllers\Api\ProfileController;
 //hdhdggcgg
-Route::middleware(['jwt_verify','role:super_admin'])->controller( StudentController::class)->group( function () {
+Route::controller( StudentController::class)->group( function () {
     Route::get('student/insert', 'create');
 Route::post('student/store', 'store');
 Route::get('student/index', 'index');
@@ -52,7 +52,7 @@ Route::get('/shownam' ,function () {
 
 Route::resource('sex', SexController::class);
 
-Route::middleware(['jwt_verify'])->controller(Quran_EpisodesController::class)->group( function ($id) {
+Route::controller(Quran_EpisodesController::class)->group( function ($id) {
 Route::get('quran_episod/episades',  'create');
 Route::post('quran_episod/store', 'store');
 Route::get('quran_episod/index',  'index');
@@ -61,7 +61,7 @@ Route::post('quran_episod/update/{id}',  'update');
 Route::get('quran_episod/destroy/{id}','destroy');
 Route::get('quran_episod/delete/all/Truncate','deleteTruncate');
 });
-Route::middleware(['jwt_verify'])->controller(TeacherController::class)->group( function ($id) {
+Route::controller(TeacherController::class)->group( function ($id) {
 Route::get('teacher/insert',  'create');
 Route::post('teacher/store', 'store');
 Route::get('teacher/index',  'index');
@@ -70,7 +70,7 @@ Route::post('teacher/update/{id}',  'update');
 Route::get('teacher/destroy/{id}','destroy');
 Route::get('teacher/delete/all/Truncate','deleteTruncate');
 });
-Route::middleware(['jwt_verify'])->controller(GuardianController::class)->group( function () {
+Route::controller(GuardianController::class)->group( function () {
 Route::get('guardian/insert',  'create');
 Route::post('guardian/store', 'store');
 Route::get('guardian/index',  'index');
