@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<center><h1>Table User</h1>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -11,21 +12,19 @@
               <th>ID</th>
               <th>name</th>
               <th>email</th>
-             
+                <th>phone</th>
                 <th>password</th>
-                <th>password2</th>
                 <th>type_user_id</th>
-                
-                
+
+
                @foreach ($users as $post)
                <tr>
                  <td>{{$post->id}}</td>
                  <td>{{$post->name}}</td>
                  <td>{{$post->email}}</td>
-                 
+                 <td>{{$post->phone}}</td>
                  <td>{{$post->password}}</td>
-                 <td>{{$post->password2}}</td>
-                 <td>{{$post->type_user->type_users}}</td>               
+                 <td>{{$post->type_user_id}}</td>
                    <td>
                        <a class="btn btn-primary", href="{{route('user.edit',$post->id)}}",  style="background: red ,">Edit</a>
                        <a href="{{route('user.destroy',$post->id)}}">Delete</a>
@@ -38,3 +37,4 @@
           <a href="{{route('user.delete.all.Truncate')}}">Delete  Truncate</a>
 </body>
 </html>
+</center>

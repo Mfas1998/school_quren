@@ -13,7 +13,7 @@
 @csrf
 <label for='exampleInputEmaill'>الاسم اطالب</label>
     <input type="text" name="Name_student"value="{{$post->Name_student}}">><br>
-   
+
     <label for='exampleInputEmaill'>التاريخ الميلاد</label>
     <input type="date" name="Date_birth"value="{{$post->Date_birth}}"><br>
     <label for='exampleInputEmaill'>العنوان</label>
@@ -22,19 +22,19 @@
     <input type="text" name="Chapret"value="{{$post->Chapret}}"><br>
     <label for='exampleInputEmaill'>المدرسه</label>
     <input type="text" name="School"value="{{$post->School}}"><br>
-    
+
     <label for='exampleInputEmaill'>نوع الهوية</label>
     <select class="form-control"name='identtity_id'>
 
    @foreach($identity as $type_user)
      <option value="{{$type_user->id}}"{{$post ->identtity_id == $type_user->id ? 'selected':''}}>{{$type_user->type_identity}}</option>
   @endforeach
-    </select> 
+    </select>
 </div>
 <br> <label for='exampleInputEmaill'>الرقم الهوية</label>
     <input type="text" name="Number_identity" value="{{$post->Number_identity}}"><br>
     //
-    
+
     <label for='exampleInputEmaill'>الجنس</label>
     <select class="form-control"name='sex_id'>
 
@@ -62,7 +62,7 @@
     <input type="text" name="Current_save"value="{{$post->Current_save}}">><br>
     <label for='exampleInputEmaill'> التاريخ الإالتحاق في المركز</label>
     <input type="date" name="Date_Join_Episode"value="{{$post->Date_Join_Episode}}"><br>
-    
+
 <label for='exampleInputEmaill'>اسم الحلقه</label>
         <select class="form-control"name='quran_episodes_id'>
    @foreach($quran_episades as $type_user)

@@ -6,7 +6,7 @@ use App\Models\user;
 use Illuminate\Http\Request;
 // use Illuminate\Support\Facades\Validator;
 use App\Http\Requests\Auth\UsersRequest;
-// use App\Http\Resources\Userreso;
+use App\Http\Resources\Userreso;
 
 class UserController extends Controller
 {
@@ -21,11 +21,9 @@ class UserController extends Controller
 
 
     public function store(UsersRequest $request)
-    {$user = User::create($request->validated(),['password' => bcrypt($request->password)]);
-        if($user){$user->addRole($request->user_role);
-             return response()->json([
-            'message' => 'User successfully registered','user' => $user], 201);
-             }
+    {$user = User::create($request->validated(),['password' => bcrypt($request->password),]);
+        if($user){   return response()->json([
+            'message' => 'User successfully registered','user' => $user  ], 201);    }
         else{ return response()->json([
             'message' => 'User not successfully registered','user' => null], 201);}
     }

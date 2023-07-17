@@ -3,14 +3,11 @@
 namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Api\ApiResponseTrait;
 use App\Http\Controllers\Controller;
-// use App\Models\sex;
-// use App\Models\sexual;
-// use App\Models\identity;
 use App\Models\guardian;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 // use App\Http\Resources\Userreso;
-;
+use App\Http\Requests\Auth\GuardianRequest;
 class GuardianController extends Controller
 {
     // use ApiResponseTrait;
@@ -28,33 +25,23 @@ class GuardianController extends Controller
     }
 
 
-    public function store(Request $request)
+    public function store(GuardianRequest $request)
     {
-        $validator = Validator::make($request->all(), [
-            'name' => 'required|string|between:3,100',
-             'gender' => 'required|digits:1',
-            'job' => 'required|string|max:100',
+        // return response()->json([
+        //         'message' => 'guardian not successfully registered',
+        //         'guardian' => null
+        //     ], 400);
 
-            'social_status' => 'required|string|max:100',
-        ]);
-        if($validator->fails()){
-            return response()->json($validator->errors()->toJson(), 400);
-        }
         $guardian = guardian::create(
-            array_merge(
-                $validator->validated(),
-                [
-               'users_id'=>$request->users_id,
-
-                ] )
-        );
+            array_merge( $request->validated(),
+                ['password' => bcrypt($request->password)] ));
 
         if($guardian){return response()->json([
             'message' => 'guardian successfully registered',
             'guardian' => $guardian  ], 201);}
         else{ return response()->json([
         'message' => 'guardian not successfully registered',
-        'guardian' => $guardian
+        'guardian' => null
     ], 400);}
 
 }
@@ -86,6 +73,9 @@ class GuardianController extends Controller
              'gender' => 'required|digits:1',
             'job' => 'required|string|max:100',
             'social_status' => 'required|string|max:100',
+            'email'  => 'required|string||max:100|unique:users',
+            'phone' => 'required|digits_between:5,20|unique:users,phone',
+            'password' => 'required|string|confirmed|min:6|unique:users,phone,password',
         ]);
         if($validator->fails()){
             return response()->json($validator->errors()->toJson(), 400);

@@ -3,7 +3,8 @@
 namespace App\Http\Requests\Auth;
 
 use Illuminate\Foundation\Http\FormRequest;
-
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Http\Request;
 class ProfileUpdateRequest extends FormRequest
 {
     /**
@@ -19,7 +20,7 @@ class ProfileUpdateRequest extends FormRequest
      *
      * @return array<string, \Illuminate\Contracts\Validation\Rule|array|string>
      */
-    public function rules(): array
+    public function rules():array
     {
         return [
             // 'name' => 'required|max:100',
@@ -31,10 +32,7 @@ class ProfileUpdateRequest extends FormRequest
             // 'password' => 'sometimes|confirmed|min:6',
             // //'image'=>'required|image|mimes:jpg,png,jpeg,webp','max:2048',
             'name' => 'required|string|between:3,100',
-            'email' => 'required|string|email|max:100|unique:users',
-            // 'phone' => 'required|digits_between:5,20|unique:users,phone',
-            'password' => 'required|string|confirmed|min:6|unique:users,phone,password',
-            //  'type_user_id' => 'required|digits:1',
+
         ];
     }
 }

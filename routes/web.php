@@ -1,11 +1,11 @@
 <?php
-use App\Http\Controllers\auth\SexController;
+use App\Http\Controllers\Auth\SexController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\QuranEpisadesController;
-use App\Http\Controllers\auth\TeacherController;
-use App\Http\Controllers\auth\ParentsController;
-use App\Http\Controllers\auth\StudentController;
-use App\Http\Controllers\auth\UserController;
+use App\Http\Controllers\Auth\QuranEpisadesController;
+use App\Http\Controllers\Auth\TeacherController;
+use App\Http\Controllers\Auth\GuardianController;
+use App\Http\Controllers\Auth\StudentController;
+use App\Http\Controllers\Auth\UserController;
 
 /*
 
@@ -76,7 +76,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::controller(ParentsController::class)->group( function ($id) {
+Route::controller(GuardianController::class)->group( function ($id) {
 Route::get('parent/insert',  'create')->name(name: 'parent.insert');
 Route::post('parent/store', 'store')->name(name: 'parent.store');
 Route::get('parent/index',  'index')->name(name: 'parent.index');

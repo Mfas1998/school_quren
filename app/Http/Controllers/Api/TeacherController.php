@@ -3,17 +3,16 @@
 namespace App\Http\Controllers\Api;
 // use App\Http\Controllers\Api\ApiResponseTrait;
 use App\Http\Controllers\Controller;
-// use App\Models\sex;
-use App\Models\nationality;
+
 use App\Models\identity;
 use App\Models\teacher;
 use App\Models\User;
-use App\Models\type_users;
+// use App\Models\nationality;
 use App\Models\Qualification_study;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
-// use App\Http\Resources\Userreso;
-;
+use App\Http\Requests\Auth\TeacherRequest;
+
 class TeacherController extends Controller
 {
     // use ApiResponseTrait;
@@ -49,47 +48,20 @@ class TeacherController extends Controller
 //  return response()->json($users);
 
     }
-    public function store(Request $request)
+    public function store(TeacherRequest $request)
     {
-        $validator = Validator::make($request->all(), [
-            'name' => 'required|string|max:100',
-            'qualification' => 'required|string|max:70',
-            'work' => 'required|string|max:100',
-            'salary' => 'required|min:4',
-            'teaching_years' => 'required|date',
-            'center_they_work' => 'required|string|max:100',
-            'address' => 'required|string|max:50',
-            'number_identity' => 'required|digits_between:5,20',
-            'gender' => 'required|digits:1',
-            'birth_date' => 'required|date',
-        ]);
-
-        if($validator->fails()){
-            return response()->json($validator->errors()->toJson(), 400);
-        }
-        $teachers = teacher::insert(
+        $teach = teacher::create(
             array_merge(
-                $validator->validated(), [
-                    // 'teaching_years'=>$request->teaching_years,
-                'identity_id'=>$request->identtity_id,
-                'nationality_id'=>$request->nationality_id,
-                'qualification_study_id'=>$request->qualification_study_id,
-                'users_id'=>$request->users_id,
-                ]
-            )
-        );
+                $request->validated(), [
+                // 'teaching_years'=>$request->teaching_years,
+                //     'birth_date'=>$request->birth_date,
+                ] ));
 
-if($teachers){
-        return response()->json([
-            'message' => 'teachers successfully registered',
-            'teachers' => $teachers
-        ], 201);}
-       else{ return response()->json([
-            'message' => 'teachers not successfully registered',
-            'parents' => $teachers
-        ], 400);}
-
-}
+        if($teach){return response()->json([
+                'message' => 'teachers successfully registered','teachers' => $teach, ], 201);}
+            return response()->json([
+            'message' => 'teachers not successfully registered','teachers' => null], 400);
+    }
 
     public function show(string $id)
     {

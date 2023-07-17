@@ -26,6 +26,8 @@ class UsersRequest extends FormRequest
             'email' => 'required|string|email|max:100|unique:users',
             'phone' => 'required|digits_between:5,20|unique:users,phone',
             'password' => 'required|string|confirmed|min:6|unique:users,phone,password',
+
+          
         ];
     }
 }

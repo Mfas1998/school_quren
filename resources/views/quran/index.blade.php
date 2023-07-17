@@ -7,30 +7,30 @@
     <title>Document</title>
 </head>
 <body>
-          <table border="1">
-              <th>ID</th>
-              <th>Id_teacher</th>    
-              <th>Name_episodes</th>
-              <th>Id_period</th>
-              <th>Number_student</th>
-              <th>sex_id</th>
-              <th>Id_system</th>
-              <th>Pro</th>
+            <table border="1">
+                <th>ID</th>
+                <th>Name</th>
+                <th>teacher</th>
 
-               @foreach ($posts as $post)
-               <tr>
-                 <td>{{$post->id}}</td> 
-                  <td>{{$post->teacher->Name_tracher}}</td>
-                 <td>{{$post->name_episodes}}</td>
-                 <td>{{$post->period->type_period}}</td> 
-                 <td>{{$post->number_student}}</td>
-                 <td>{{$post->sex->type}}</td>
-                 <td>{{$post->system_episodes->name}}</td>
-                
-                   <td>
-                       <a class="btn btn-primary", href="{{route('quran.edit',$post->id)}}",  style="background: red ,">Edit</a>
-                       <a href="{{route('quran.destroy',$post->id)}}">Delete</a>
-                      
+                <th>period</th>
+
+                <th>Gender</th>
+                <th>system</th>
+                <th>Pro</th>
+
+                @foreach ($posts as $post)
+                <tr>
+                    <td>{{$post->id}}</td>
+                    <td>{{$post->name}}</td>
+                    <td>{{$post->teachers->name}}</td>
+                    <td>{{$post->period}}</td>
+                    <td>{{$post->gender}}</td>
+                    <td>{{$post->system_episod->name}}</td>
+
+                    <td>
+                        <a class="btn btn-primary", href="{{route('quran.edit',$post->id)}}",  style="background: red ,">Edit</a>
+                        <a href="{{route('quran.destroy',$post->id)}}">Delete</a>
+
                    </td>
                </tr>
 

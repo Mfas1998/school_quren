@@ -9,8 +9,8 @@ use App\Models\system_episod;
 use App\Models\quran_episodes;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
-// use App\Http\Resources\Userreso;
-;
+use App\Http\Requests\Auth\QuranEpisodesReques;
+
 class Quran_EpisodesController extends Controller
 {
     // use ApiResponseTrait;
@@ -37,28 +37,18 @@ class Quran_EpisodesController extends Controller
     }
 
 
-    public function store(Request $request)
+    public function store(QuranEpisodesReques $request)
     {
-        $validator = Validator::make($request->all(), [
-            'name'=>'required|string|max:255',
-            'period'=>'required|digits:1',
-            'gender'=>'required|digits:1',
-        ]);
-        if($validator->fails()){
-            return response()->json($validator->errors()->toJson(), 400);
-        }
+
         $quran_episod = quran_episodes::create(
             array_merge(
-                $validator->validated(), [
-                'teacher_id'=>$request->teacher_id,
-                    'system_episoded_id'=>$request->system_episoded_id,
+                $request->validated(), [
+                // 'teacher_id'=>$request->teacher_id,
+                    // 'system_episoded_id'=>$request->system_episoded_id,
                 ] ));
 
-if($quran_episod){
-        return response()->json([
-            'message' => 'quran_episod successfully registered',
-            'quran_episod' => $quran_episod,
-        ], 201);}
+if($quran_episod){return response()->json([
+    'message' => 'quran _episod successfully registered','quran_episod' => $quran_episod,], 201);}
         return response()->json([
             'message' => 'quran_episod nut successfully registered',
             'quran_episod' => null

@@ -7,34 +7,29 @@
     <title>Document</title>
 </head>
 <body>
-          <table border="1">
-              <th>ID</th>
-              <th>Name_parents</th>
-              <th>Phone</th>
-                <th>identtity_id</th>
-                <th>Number_identity</th>
-                <th>sex_id</th>
-                <th>sexual_id</th>
-                <th>Email</th>
+            <table border="1">
+                <th>ID</th>
+                <th>Name</th>
+                <th>Gender</th>
+                <th>Phone</th>
                 <th>Job</th>
                 <th>link_kinship</th>
                 <th>Social_status</th>
-
                 <th>Pro</th>
                @foreach ($posts as $post)
                <tr>
                  <td>{{$post->id}}</td>
-                 <td>{{$post->Name_parents}}</td>
-                 <td>{{$post->Phone}}</td>
-                 <td>{{$post->identity->type_identity}}</td>
+                 <td>{{$post->name}}</td>
+                 <td>{{$post->gender}}</td>
+                 {{--  <td>{{$post->identity->type_identity}}</td>
                  <td>{{$post->Number_identity}}</td>
                  <td>{{$post->sex->type}}</td>
-                 <td>{{$post->sexual->name_sexual}}</td>
-                  <td>{{$post->Email}}</td>
-                 <td>{{$post->Job}}</td>
+                 <td>{{$post->sexual->name_sexual}}</td>  --}}
+                  <td>{{$post->job}}</td>
                  <td>{{$post->link_kinship}}</td>
-                 <td>{{$post->Social_status}}</td>
-                
+                 <td>{{$post->social_status}}</td>
+                 <td>{{$post->userss->name}}</td>
+
 
                    <td>
                        <a class="btn btn-primary", href="{{route('parent.edit',$post->id)}}" ,  style="background: red ,">Edit</a>

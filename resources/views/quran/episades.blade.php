@@ -1,4 +1,4 @@
-<h1>The Episades</h1>
+<center><h1>The Episades</h1></center>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,48 +8,35 @@
     <title>Document</title>
 </head>
 <body>
+    <center>
 <form action="{{route('quran.store')}}" method="post">
 @csrf
 <br>
 <label for='exampleInputEmaill'>اسم الحلقه</label><br>
-<input type="text" name="name_episodes"><br>
-<br> <label for='exampleInputEmaill'>عدد الطلاب</label><br>
-    <input type="text" name="number_student"><br>
-     <label for='exampleInputEmaill'>اسم </label><br>
-    <select class="form-control"name='Id_teacher'>
+    <input type="text" name="name"><br>
 
-   @foreach($teacher as $type_user)
-     <option value="{{$type_user->id}}">{{$type_user->Name_tracher}}</option>
-  @endforeach
-    </select>
-</div>
-<label for='exampleInputEmaill'>الفتره</label><br>
-    <select class="form-control"name='Id_period'>
-   @foreach($period as $type_user)
-<option value="{{$type_user->id}}">{{$type_user->type_period}}</option>
- @endforeach
-</select> </div><br>
+<label for='exampleInputEmaill'>اسم </label><br>
+                <select class="form-control"name='teacher_id'>
+                    @foreach($teacher as $type_user)
+                        <option value="{{$type_user->id}}"{{$post->teacher_id == $type_user->id ? 'selected':''}}>{{$type_user->name}}</option>
+                    @endforeach
+                </select></div> <br>
+<label for='exampleInputEmaill'>الفتراة</label><br>
+    <input type="text" name="period"><br>
+<label for='exampleInputEmaill'>الجنس</label><br>
+    <input type="text" name="gender"><br>
 
-    //
-    <label for='exampleInputEmaill'>الجنس</label><br>
-    <select class="form-control"name='sex_id'>
+<label for='exampleInputEmaill'>نظام الحلقة</label><br>
+    <select class="form-control"name='system_episoded_id'>
+        @foreach($system_episodes as $type_user)
+            <option value="{{$type_user->id}}"{{$post->system_episoded_id == $type_user->id ? 'selected':''}}>{{$type_user->name}}</option>
+        @endforeach
+    </select> </div><br>
 
-   @foreach($sex as $type_user)
-<option value="{{$type_user->id}}">{{$type_user->type}}</option>
- @endforeach
-</select> </div><br>
-//
-
-
-<label for='exampleInputEmaill'>نضام الحلقه</label><br>
-    <select class="form-control"name='Id_system_episoded'>
-   @foreach($system_episodes as $type_user)
-<option value="{{$type_user->id}}">{{$type_user->name}}</option>
- @endforeach
-</select> </div><br>
 
     <button type="submit">Insert</button>
 
 </form>
+</center>
 </body>
 </html>

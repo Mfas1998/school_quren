@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Auth;
 use App\Models\Role_users;
 use App\Models\user;
 use Illuminate\Http\Request;
@@ -16,24 +16,33 @@ class UserController extends Controller
     }
 
     public function create()
-    {
-        $type_users=Role_users::all();
-        return view( 'user.insert',compact('type_users'));
+    {return view( 'user.insert');
+        // $type_users=Role_users::all();
+        // return view( 'user.insert',compact('type_users'));
     }
     public function store(Request $request)
     {
-    DB::table(table:'users')->insert([
 
-
+        User::create([
             'name'=>$request->name,
             'email'=>$request->email,
-            'password'=>$request->password,
-            'password2'=>$request->password2,
-            'type_user_id'=>$request->type_user_id,
-        ]);
+            'phone'=>$request->phone,
 
-        return response(content: 'تم الاضافة بنجاح');
-    //    return redirect()->route('user.index');
+            'password' => bcrypt($request->password),
+            'type_user_id'=>$request->type_user_id,]);
+    // DB::table(table:'users')->insert([
+
+
+    //         'name'=>$request->name,
+    //         'email'=>$request->email,
+    //         'phone'=>$request->phone,
+    //         'password'=>$request->password,
+    //         'password2'=>$request->password2,
+
+    //     ]);
+
+        // return response(content: 'تم الاضافة بنجاح');
+       return redirect()->route('user.index');
     }
 
     /**
@@ -54,9 +63,10 @@ class UserController extends Controller
      */
     public function edit(int $uses)
     {
+        // return view( 'user.edit',compact('uses'));
     $uses=user::find($uses);
-        $type_users=type_user::all();
-        return view( 'user.edit', compact('uses','type_users'));
+        // $type_users=type_user::all();
+        return view( 'user.edit', compact('uses'));
     }
 
     /**
@@ -64,15 +74,21 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-
-        $type_users=DB::table(table:'users')->where('id',$id)->update([
-           'name'=>$request->name,
+        User::where('id',$id)->update([
+            'user_name'=>$request->user_name,
             'email'=>$request->email,
-            'password'=>$request->password,
-            'password2'=>$request->password2,
-            'type_user_id'=>$request->type_user_id,
-            ]);
-            $type_users=type_user::find($request->type_user_id);
+            'phone'=>$request->phone,
+            'password' => bcrypt($request->password),
+            'type_user_id'=>$request->type_user_id,]);
+
+        // $type_users=DB::table(table:'users')->where('id',$id)->update([
+        //    'name'=>$request->name,
+        //     'email'=>$request->email,
+        //     'password'=>$request->password,
+        //     'password2'=>$request->password2,
+        //     'type_user_id'=>$request->type_user_id,
+        //     ]);
+        //     $type_users=type_user::find($request->type_user_id);
             //  return response(content: 'تم الاضافة بنجاح');مخ0-لفلا ىة
       return redirect()->route('user.index');
     }

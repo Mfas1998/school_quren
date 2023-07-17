@@ -15,10 +15,10 @@ class Userreso extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'id'=>$this->id,
+
         'hhmn'=>$this->name,
         'jfjf'=>$this->email,
-        
+        'id'=>$this->phone,
         'tdtdg'=>$this->type_user_id,
     ];
     }

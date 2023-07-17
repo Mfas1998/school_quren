@@ -1,16 +1,18 @@
 <?php
 
-namespace App\Http\Controllers;
-use App\Models\sex;
-use App\Models\sexual;
-use App\Models\identity;
-use App\Models\parents;
-use App\Models\quran_episades;
-use App\Models\student;
+namespace App\Http\Controllers\Auth;
 use App\Models\User;
-use App\Models\type_users;
+use App\Models\parents;
+use App\Models\student;
+use App\Models\guardian;
+use App\Models\identity;
+use App\Models\nationality;
 use Illuminate\Http\Request;
+// use App\Models\type_users;
 use Illuminate\Support\Facades\DB;
+use App\Models\Qualification_study;
+use App\Http\Requests\Auth\StudenRequest;
+
 class StudentController extends Controller
 {
     /**
@@ -18,9 +20,9 @@ class StudentController extends Controller
      */
     public function index()
     {
-        $students =student::all();
+        $student =student::all();
 
-        return view('student.index', compact('students'));
+        return view('student.index', compact('student'));
         // $posts = DB::table('students')->get();
         // return view('student.index', compact('posts'));
     }
@@ -30,32 +32,42 @@ class StudentController extends Controller
      */
     public function create()
     {
+        $nationality=nationality::all();
         $identity=identity::all();
-        $type=sex::all();
-        $types=sexual::all();
-        $parents=parents::all();
-        $quran_episades=quran_episades::all();
-        return view('student.insert',compact('identity','type','types','parents','quran_episades'));
+        $User=User::all();
+        $Qualification_study=Qualification_study::all();
+        $guardian=guardian::all();
+        return view('student.insert',compact('nationality','identity','User','Qualification_study','guardian'));
 
     }
 
-    public function store(Request $request)
+    public function store(StudenRequest $request)
     {
+        $imageName =  $request-> image -> getClientOriginalExtension();
+        $image_nam=time().'.'.$imageName;
+        $path='imagesfp';
+        $request->image->move($path,$image_nam);
+        // $students = student::create(array_merge(
+        //     $request->validated(),
+        //         [
+        //         'image'=>$nameee,
+        //         ]));
         DB::table(table:'students')->insert([
-            'Name_student'=>$request->Name_student,
-            'Date_birth'=>$request->Date_birth,
-            'Address'=>$request->Address,
-            'Chapret'=>$request->Chapret,
-            'School'=>$request->School,
-            'identtity_id'=>$request->identtity_id,
-            'Number_identity'=>$request->Number_identity,
-            'sex_id'=>$request->sex_id,
-            'sexual_id'=>$request->sexual_id,
-            'parents_id'=>$request->parents_id,
-            'Previous_save'=>$request->Previous_save,
-            'Current_save'=>$request->Current_save,
-            'Date_Join_Episode'=>$request->Date_Join_Episode,
+            // student::create([
+            'name'=>$request->name,
+            'address'=>$request->address,
+            'school'=>$request->school,
+            'identity_id'=>$request->identity_id,
+            'number_identity'=>$request->number_identity,
+            'gender'=>$request->gender,
+            'nationality_id'=>$request->nationality_id,
+            'guardian_id'=>$request->guardian_id,
+            'previous_save'=>$request->previous_save,
+            'date_Join'=>$request->date_Join,
             'quran_episodes_id'=>$request->quran_episodes_id,
+            'users_id'=>$request->users_id,
+            'image'=>$image,
+            'birth_date'=>$request->birth_date,
         ]);
         //  return response(content: 'تم الاضافة بنجاح');
        return redirect()->route('student.index');

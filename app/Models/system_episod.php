@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 class system_episod extends Model
 {
     // use HasFactory;
-    // protected $table ='system_episodes';
+    protected $table ='system_episodes';
     protected $fillable = [
         'id',
         'name',];
