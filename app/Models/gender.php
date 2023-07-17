@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Parant;
 use App\Models\student;
 use App\Models\teacher;
 use App\Models\guardian;
@@ -17,7 +18,7 @@ class gender extends Model
         'id',
     'name'];
     public function  guardian(){
-        return $this->hasMany(guardian::class,'gender_id','id');
+        return $this->hasMany(Parant::class,'gender_id','id');
     }
     public function  student(){
         return $this->hasMany(student::class,'gender_id','id');

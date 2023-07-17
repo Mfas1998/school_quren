@@ -18,7 +18,13 @@ return [
     'defaults' => [
         'guard' => 'api',
         'passwords' => 'users',
-    ],
+        // 'guard' => 'student',
+        // 'passwords' => 'students',
+        // 'guard' => 'guardian',
+        // 'passwords' => 'guardians',
+        // 'guard' => 'Teacher',
+        // 'passwords' => 'teachers',
+     ],
 
     /*
     |--------------------------------------------------------------------------
@@ -38,16 +44,39 @@ return [
     */
 
     'guards' => [
-        'web' => [
-            'driver' => 'session',
-            'provider' => 'users',
-        ],
-         
+        // 'web' => [
+        //     'driver' => 'session',
+        //     'provider' => 'users',
+        // ],
+        // 'student' => [
+        //     'driver' => 'session',
+        //     'provider' => 'students',
+        // ],
+        // 'guardian' => [
+        //     'driver' => 'session',
+        //     'provider' => 'guardians',
+        // ],
+        // 'teacher' => [
+        //     'driver' => 'session',
+        //     'provider' => 'teachers',
+        // ],
 
         'api' => [
             'driver' => 'jwt',
             'provider' => 'users',
             'hash' => false,
+        ],
+        'guardian' => [
+            'driver' => 'jwt',
+            'provider' => 'guardians',
+        ],
+        'student' => [
+            'driver' => 'jwt',
+            'provider' => 'students',
+        ],
+        'Teacher' => [
+            'driver' => 'jwt',
+            'provider' => 'teachers',
         ],
     ],
 
@@ -73,7 +102,18 @@ return [
             'driver' => 'eloquent',
             'model' => App\Models\User::class,
         ],
-
+        'students' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\student::class,
+        ],
+        'guardians' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\guardian::class,
+        ],
+        'teachers' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Teacher::class,
+        ],
         // 'users' => [
         //     'driver' => 'database',
         //     'table' => 'users',
@@ -102,6 +142,24 @@ return [
     'passwords' => [
         'users' => [
             'provider' => 'users',
+            'table' => 'password_reset_tokens',
+            'expire' => 60,
+            'throttle' => 60,
+        ],
+        'students' => [
+            'provider' => 'students',
+            'table' => 'password_reset_tokens',
+            'expire' => 60,
+            'throttle' => 60,
+        ],
+        // 'guardians' => [
+        //     'provider' => 'users',
+        //     'table' => 'password_reset_tokens',
+        //     'expire' => 60,
+        //     'throttle' => 60,
+        // ],
+        'teachers' => [
+            'provider' => 'teachers',
             'table' => 'password_reset_tokens',
             'expire' => 60,
             'throttle' => 60,

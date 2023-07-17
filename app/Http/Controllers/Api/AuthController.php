@@ -51,11 +51,9 @@ class AuthController extends Controller
      */
     public function register(Request $request) {
         $validator = Validator::make($request->all(), [
-            'name' => 'required|string|between:3,100',
+            'user_name' => 'required|string|between:3,100',
             'email' => 'required|string|email|max:100|unique:users',
-            'phone' => 'required|digits_between:5,20|unique:users,phone',
-            'password' => 'required|string|confirmed|min:6|unique:users,phone,password',
-            //  'type_user_id' => 'required|digits:1',
+            'password' => 'required|string|confirmed|min:6|unique:users,password',
         ]);
         if($validator->fails()){
             return response()->json($validator->errors()->toJson(), 400);
@@ -67,6 +65,7 @@ class AuthController extends Controller
                     //'type_user_id'=>$request->type_user_id
                     ]
                 ));
+                $user->addRole($request->user_role);
         return response()->json([
             'message' => 'User successfully registered',
             'user' => $user

@@ -24,7 +24,12 @@
 <label for='exampleInputEmaill'>الفتراة</label><br>
     <input type="text" name="period"><br>
 <label for='exampleInputEmaill'>الجنس</label><br>
-    <input type="text" name="gender"><br>
+<select class="form-control"name='gender_id'>
+    @foreach($gender as $type_user)
+        <option value="{{$type_user->id}}">{{$type_user->name}}</option>
+    @endforeach
+</select>
+    {{--  <input type="text" name="gender"><br>  --}}
 
 <label for='exampleInputEmaill'>نظام الحلقة</label><br>
     <select class="form-control"name='system_episoded_id'>

@@ -7,6 +7,8 @@
     <title>Document</title>
 </head>
 <body>
+    <center>
+        <h1>Table Episodes</h1>
             <table border="1">
                 <th>ID</th>
                 <th>Name</th>
@@ -24,7 +26,7 @@
                     <td>{{$post->name}}</td>
                     <td>{{$post->teachers->name}}</td>
                     <td>{{$post->period}}</td>
-                    <td>{{$post->gender}}</td>
+                    <td>{{$post->gender->name}}</td>
                     <td>{{$post->system_episod->name}}</td>
 
                     <td>
@@ -38,5 +40,6 @@
           </table>
           <a href="{{route('quran.episades')}}">insert</a><br>
           <a href="{{route('quran.delete.all.Truncate')}}">Delete  Truncate</a>
+        </center>
 </body>
 </html>

@@ -23,12 +23,12 @@ class GuardianRequest extends FormRequest
     {
         return [
             'name' => 'required|string|between:3,100',
-            'gender' => 'required|digits:1',
+            'gender_id' => 'required|digits:1',
             'job' => 'required|string|max:100',
-            'link_kinship' => 'required|string|max:100',
             'social_status' => 'required|string|max:100',
-            'users_id'=>'required|integer',
-
+            'email'  => 'required|string',
+            'phone' => 'required|digits_between:5,20',
+            'password' => 'required|string|confirmed|min:6',
         ];
     }
 }

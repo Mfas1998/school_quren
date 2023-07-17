@@ -17,7 +17,7 @@ class nationality extends Model
     protected $table ='nationality';
     protected $fillable = [
         // 'id',
-        'name_nationality'];
+        'name'];
     public function  teacher(){
         return $this->hasMany(teacher::class,'nationality_id','id');
     }

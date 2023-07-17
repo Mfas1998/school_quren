@@ -53,8 +53,8 @@ class TeacherController extends Controller
         $teach = teacher::create(
             array_merge(
                 $request->validated(), [
-                // 'teaching_years'=>$request->teaching_years,
-                //     'birth_date'=>$request->birth_date,
+                    'password' => bcrypt($request->password),
+                    // 'job_id' =>$request->job_id
                 ] ));
 
         if($teach){return response()->json([

@@ -1,58 +1,53 @@
-<h1>The Teacher</h1>
+
+@extends('admin.layout.master')
+@section('content')
 <!DOCTYPE html>
-<html lang="en">
+<html class="no-js" lang="en" dir="ltr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-</head><br>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>:: My-Task:: Tickets</title>
+    <link rel="icon" href="{{asset('/favicon.ico')}}" type="image/x-icon"> <!-- Favicon-->
+    <!-- plugin css file  -->
+    <link rel="stylesheet" href="{{asset('/assets/css/dataTables.bootstrap5.min.css')}}">
+    <!-- project css file  -->
+    <link rel="stylesheet" href="{{asset('/assets/css/my-task.style.min.css')}}">
+</head>
 <body>
-<form action="{{route('parent.store')}}" method="post">
-@csrf
-          <label>أسم المستخدم</label><br>
-    <input type="text" name="name"><br>
-    <label>الجنس</label><br>
-    <input type="text" name="gender"><br>
-    <br><br><label>الوضيفة</label><br>
-    <input type="text" name="job"><br>
-    <br><br><label>صلة الرحم</label><br>
-    <input type="text" name="link_kinship"><br>
-    <label>حالة الاب</label><br>
-    <input type="text" name="social_status"><br>
-    <br>
-    {{--  <input type="text" name="users_id"><br>  --}}
+    <!-- Add Tickit-->
+        <div class="body d-flex py-lg-3 py-md-2">
+            <div class="container-xxl">
+                <div class="modal-header"><h5 class="modal-title  fw-bold" >Add Guardian </h5>
+                    {{--  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>  --}}
+                </div>
+                <div class="row clearfix g-3">
+                <div class="col-sm-12">
+                <div class="card mb-3">
+                <div class="card-body">
+            <form action="{{route('parent.store')}}" method="post">
+                @csrf
+                    <div class="row g-3 mb-5"><div class="col"> <label for="depone" class="form-label">ألاسم</label> <input type="text" name="name" class="form-control"></div>
+                            <div class="col"><label for='exampleInputEmaill' class="form-label">الجنس</label><select class="form-control form-select" name='gender_id'>
+                                            @foreach($post as $type_gender) <option value="{{$type_gender->id}}">{{$type_gender->name}}</option>
+                                            @endforeach</select></div></div>
+                    <div class="row g-3 mb-5"><div class="col"><label for="depone" class="form-label">الوظيفة</label><input type="text" name="job" class="form-control"> </div>
+                        <div class="col "><label for="depone" class="form-label">الحالة الاجتماعية</label> <input type="text" name="social_status" class="form-control"></div></div>
+                    <div class="row g-3 mb-5"><div class="col"><label for="depone" class="form-label">الايميل </label><input type="text" name="email" class="form-control"></div>
+                        <div class="col "><label for="depone" class="form-label">رقم الجوال </label><input type="text" name="phone" class="form-control"></div></div>
+                    <div class="row g-3 mb-5"><div class="col"><label for="depone" class="form-label"> كلمة السر</label><input type="text" name="password" class="form-control"></div>
+                        <div class="col "><label for="depone" class="form-label">تأكيد كلمة ألسر</label><input type="text" name="password2" placeholder="" class="form-control"></div></div>
+                    <div class="modal-footer"><button type="submit" class="btn btn-secondary">Insert</button><button type="button" class="btn btn-primary">Create</button></div>
+            </form>
+                </div> </div></div></div><!-- Row End --> </div></div>
 
-<div class='form-group'>
-     <label for='exampleInputEmaill'>المسخدم</label>
-    <select class="form-control"name='users_id'>
-   @foreach($userss as $type_user)
-     <option value="{{$type_user->id}}">{{$type_user->name}}</option>
-  @endforeach
-    </select></div><br>
-
- {{--  <label for='exampleInputEmaill'>الرقم الهوية</label><br>  --}}
-    {{--  <input type="text" name="Number_identity"><br>  --}}
-{{--  <div class='form-group'>  --}}
-    {{--  <label for='exampleInputEmaill'>الجنس</label>  --}}
-    {{--  <select class="form-control"name='sex_id'>  --}}
-
-   {{--  @foreach($type as $type_user)  --}}
-  {{--  <option value="{{$type_user->id}}">{{$type_user->type}}</option>  --}}
- {{--  @endforeach  --}}
-{{--  </select> </div><br>  --}}
-{{--  <div class='form-group'>  --}}
-    {{--  <label for='exampleInputEmaill'>الجنسيه</label>  --}}
-    {{--  <select class="form-control"name='sexual_id'>  --}}
-   {{--  @foreach($types as $type_user)  --}}
-{{--  <option value="{{$type_user->id}}">{{$type_user->name_sexual}}</option>  --}}
- {{--  @endforeach  --}}
-{{--  </select> </div><br>  --}}
-
-
-    <button type="submit">Insert</button>
-
-</form>
+<!-- Jquery Core Js -->
+<script src="{{asset('/assets/bundles/libscripts.bundle.js')}}"></script>
+<!-- Plugin Js-->
+<script src="{{asset('/assets/bundles/dataTables.bundle.js')}}"></script>
 </body>
 </html>
+<head>
+@endsection
+
 

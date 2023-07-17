@@ -9,7 +9,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
-// use Spatie\Permission\Traits\HasRoles;
 use Storage;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 use Laratrust\Contracts\LaratrustUser;
@@ -32,13 +31,26 @@ class User extends Authenticatable implements  JWTSubject,LaratrustUser
         'id',
         'user_name',
         'email',
-
+        //'phone',
         'password',
     ];
     // public function type_user(){
     //             return $this->belongsTo( type_users::class,'type_user_id','id');
     //             }
-
+//     public function  teathers(){
+//                     return $this->hasMany(teacher::class,'users_id','id');
+//                 }
+//     public function  students(){
+//                     return $this->hasMany(student::class,'users_id','id');
+//                 }
+// public function  guardian(){
+//                     return $this->hasMany(guardian::class,'users_id','id');
+//                 }
+    /**
+     * The attributes that should be hidden for arrays.
+     *
+     * @var array
+     */
     protected $hidden = [
         'password',
         'remember_token',
@@ -68,8 +80,5 @@ class User extends Authenticatable implements  JWTSubject,LaratrustUser
     public function getJWTCustomClaims() {
         return [];
     }
-    public function gitImageUrlAttribute(){
-                return Storage::disk('imagesfp')->url($this->image);
 
-                }
 }

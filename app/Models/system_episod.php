@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Models;
-use App\Models\system_episod;
+
 use App\Models\quran_episodes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;

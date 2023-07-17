@@ -18,16 +18,18 @@ return new class extends Migration
             $table->String('school');
             $table->foreignId('identity_id')->constrained('identities');
             $table->integer('number_identity');
-            $table->integer('gender');
+            $table->foreignId('gender_id')->constrained('genders');
             $table->foreignId('nationality_id')->constrained('Nationality');
-            $table->foreignId('guardian_id')->constrained('guardian');
+            $table->foreignId('guardian_id')->constrained('Guardians');
             $table->string('link_kinship');
             $table->String('previous_save');
             $table->Date('date_Join');
-            $table->foreignId('quran_episodes_id')->constrained('quran_episodes');
-            $table->foreignId('users_id')->constrained('users');
+            $table->foreignId('quran_episod_id')->constrained('quran_episodes');
             $table->string('image');
             $table->Date('birth_date');
+            $table->string('email')->unique();
+            $table->integer('phone')->unique();
+            $table->string('password');
             $table->timestamps();
         });
     }

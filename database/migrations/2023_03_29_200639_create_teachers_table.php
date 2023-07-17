@@ -15,18 +15,22 @@ return new class extends Migration
         Schema::create('teachers', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('qualification');
             $table->string('work');
             $table->integer('salary');
-            // $table->foreignId('phone_id')->constrained('phone');
             $table->date('teaching_years');
             $table->string('center_they_work');
             $table->string('address');
             $table->foreignId('identity_id')->constrained('identities');
             $table->integer('number_identity');
-            $table->integer('gender');
+            $table->foreignId('gender_id')->constrained('genders');
             $table->foreignId('nationality_id')->constrained('Nationality');
             $table->Date('birth_date');
+            $table->foreignId('qualification_study_id')->constrained('qualification_studies');
+            $table->string('email')->unique();
+            $table->integer('phone')->unique();
+            $table->string('password');
+            $table->foreignId('job_id')->constrained('jobs');
+
             $table->timestamps();
 
 

@@ -2,18 +2,27 @@
 
 namespace App\Http\Controllers\api;
 
-use App\Models\Role;
+use App\Models\job;
 //use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
+use App\Models\Role;
 use App\Models\User;
+use App\Models\gender;
+use App\Models\identity;
+use App\Models\nationality;
+use App\Models\Qualification_study;
+use App\Models\atendance;
+use App\Models\system_episod;
+use App\Http\Controllers\Controller;
 
 class appsettingscontroller extends Controller
 {
-    public function generateRoles(){
+    public function generateRoles($id=0){
+        $system = system_episod::find($id==0);
+            if(!$system){
         $super_admin=new Role();
-        $super_admin->name="super_admin";
-        $super_admin->display_name='site admin';
-        $super_admin->description='this role allow user';
+        $super_admin->name="student";
+        $super_admin->display_name='site student';
+        $super_admin->description='this role allow student';
         $super_admin->save();
 
         $manager=new Role();
@@ -27,6 +36,19 @@ class appsettingscontroller extends Controller
         $user->display_name='site user';
         $user->description='this role  user';
         $user->save();
+
+        $user=new Role();
+        $user->name="guardian";
+        $user->display_name='site guardian';
+        $user->description='this role  guardian';
+        $user->save();
+       return response()->json([
+    'message' => 'identity successfully registered','identity' => $super_admin,$manager,$user,$user], 201);
+
+        }
+      else { return response()->json([
+            'message' => 'identity not successfully registered','identity' => null], 400);}
+
     }
     public function updeteUserRole(){
         $user1=User::find(1);
@@ -34,7 +56,7 @@ class appsettingscontroller extends Controller
         $user2=User::find(2);
         $user2->addRole('manager');
         $user2=User::find(5);
-        $user2->addRole('teather');
+        $user2->addRole('user');
         $user2=User::find(6);
         $user2->addRole('guardian');
     }
@@ -58,8 +80,8 @@ class appsettingscontroller extends Controller
         $iden->save();
         $ide=new identity();
         $ide->type_identity="لايوجد ";
-        $ide->save();
-        return response()->json([
+         $ide->save();
+         return response()->json([
             'message' => 'identity successfully registered','identity' => $identity
             ,$identit,
             $identi,
@@ -68,7 +90,7 @@ class appsettingscontroller extends Controller
             $ide,], 201);
 
         }
-        else {
+          else {
             return response()->json([
                 'message' => 'identity Not successfully registered','identity' => null], 400);
         }
@@ -93,7 +115,7 @@ class appsettingscontroller extends Controller
         $nationa->save();
         return response()->json([
             'message' => 'nationality successfully registered','nationality' => $nationality,$nationalit,$nationali,$national,$nationa,], 201);}
-        else {
+          else {
             return response()->json([
                 'message' => 'nationality Not successfully registered','nationality' => null], 400);
     }
@@ -112,29 +134,31 @@ class appsettingscontroller extends Controller
             $Qualification_s->save();
             return response()->json([
                 'message' => 'nationality successfully registered','nationality' => $Qualification,$Qualification_st,$Qualification_s], 201);}
-            else {
+              else {
                 return response()->json([
                     'message' => 'nationality Not successfully registered','nationality' => null], 400);
         }}
         public function generatejop($id=0){
-            $Qualif = job::find($id==0);
-            if(!$Qualif){
+            $job = job::find($id==0);
+            if(!$job){
             $Qualification=new job();
             $Qualification->name=" مدير ";
             $Qualification->save();
-            $Qualification_s=new job();
-            $Qualification_s->name="معلم ";
-            $Qualification_s->save();
+            $Qualificatio=new job();
+            $Qualificatio->name="معلم ";
+            $Qualificatio->save();
             $Qualifica=new job();
             $Qualifica->name="مشرف ";
             $Qualifica->save();
-            $Qualif=new job();
-            $Qualif->name="موجه ";
-            $Qualif->save();
+            $Quali=new job();
+            $Quali->name="موجه ";
+            $Quali->save();
 
             return response()->json([
-                'message' => 'nationality successfully registered','nationality' => $Qualification,$Qualification_s.$Qualifica,$Qualif], 201);}
-            else {
+                'message' => 'nationality successfully registered','nationality' => $Qualification,
+                $Qualificatio.
+                $Qualific,$Quali], 201);}
+              else {
                 return response()->json([
                     'message' => 'nationality Not successfully registered','nationality' => null], 400);
         }}
@@ -149,11 +173,11 @@ class appsettingscontroller extends Controller
             $generateGender->save();
             return response()->json([
                 'message' => 'nationality successfully registered','nationality' => $generateGender,$gener], 201);}
-            else {
+              else {
                 return response()->json([
                     'message' => 'nationality Not successfully registered','nationality' => null], 400);
         }}
-        public function generateٍٍٍSystem_Spisod($id=0){
+        public function generateSystem_Spisod($id=0){
             $system = system_episod::find($id==0);
             if(!$system){
             $system_episod=new system_episod();
@@ -165,8 +189,33 @@ class appsettingscontroller extends Controller
 
             return response()->json([
                 'message' => 'nationality successfully registered','nationality' => $system_episod,$system_e], 201);}
-            else {
+              else {
                 return response()->json([
-                    'message' => 'nationality Not successfully registered','nationality' => null], 400);
-        }}
+                    'message' => 'nationality Not successfully registered','nationality' => null], 400);}}
+
+                    public function generateatendance($id=0){
+                $aten = atendance::find($id==0);
+                if(!$aten){
+                    $atendances=new atendance();
+                    $atendances->name=" حاضر ";
+                    $atendances->save();
+                    $atendance=new atendance();
+                    $atendance->name=" غائب ";
+                    $atendance->save();
+                    $atendanc=new atendance();
+                    $atendanc->name=" غاءب بإذن ";
+                    $atendanc->save();
+                    $atendan=new atendance();
+                    $atendan->name=" حضر ولم يسمع ";
+                    $atendan->save();
+                    $atenda=new atendance();
+                    $atenda->name=" انصراف بإذن ";
+                    $atenda->save();
+
+                return response()->json([
+                    'message' => 'atendances successfully registered','atendances' => $atendances,$atendance,$atendanc,$atendan,$atenda], 201);}
+                    else {
+                    return response()->json([
+                        'message' => 'atendances Not successfully registered','atendances' => null], 400);
+                }}
 }

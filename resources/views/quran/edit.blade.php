@@ -24,7 +24,13 @@
 <label for='exampleInputEmaill'>الفتراة</label><br>
     <input type="text" name="period" value="{{$post->period}}"><br>
 <label for='exampleInputEmaill'>الجنس</label><br>
-    <input type="text" name="gender" value="{{$post->gender}}"><br>
+<select class="form-control"name='gender_id'>
+    @foreach($gender as $type_user)
+        <option value="{{$type_user->id}}"{{$post->gender_id == $type_user->id ? 'selected':' '}}>{{$type_user->name}}</option>
+    @endforeach
+</select>
+
+    {{--  <input type="text" name="gender" value="{{$post->gender}}"><br>  --}}
 
 
 

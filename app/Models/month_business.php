@@ -10,7 +10,7 @@ class month_business extends Model
     use HasFactory;
     protected $fillable =
         ['id',
-            'id_student',
+        'id_student',
         'from_surah',
         'from_ayah',
         'to_surah',

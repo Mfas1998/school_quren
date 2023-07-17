@@ -25,17 +25,21 @@ class StudenRequest extends FormRequest
             'name' => 'required|string|max:100',
             'address' => 'required|string|max:50',
             'school' => 'required|string|max:50',
-            'number_identity' => 'required|digits:5',
-            'gender' => 'required|digits:1',
-            'previous_save' => 'required|string|max:50',
-            'date_Join' => 'required|Date',
-            'birth_date' => 'required|Date',
             'identity_id'=>'required|integer',
+            'number_identity' => 'required|digits:5',
+            'gender_id' => 'required|digits:1',
             'nationality_id'=>'required|integer',
-            'guardian_id'=>'required|integer',
-            'quran_episodes_id'=>'required|integer',
-            'users_id'=>'required|integer',
-                // 'image'=>'required|string'
+            'guardian_id'=>'required|digits:1',
+            'link_kinship' => 'required|string|max:100',
+            'previous_save' => 'required|string|max:50',
+            'date_Join' => 'required|date_format:Y-m-d',
+            'quran_episod_id'=>'required|integer',
+            //'image'=>'required|file',
+            'birth_date' => 'required|date_format:Y-m-d',
+            'email'  => 'required|string||max:100|unique:students',
+            'phone' => 'required|digits_between:5,20|unique:students,phone',
+            'password' => 'required|string|confirmed|min:6|unique:students,phone,password',
+
         ];
     }
 }

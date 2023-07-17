@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('name');
             $table->foreignId('teacher_id')->constrained('teachers');
             $table->integer('period');
-            $table->integer('gender');
+            $table->foreignId('gender_id')->constrained('genders');
             $table->foreignId('system_episoded_id')->constrained('system_episodes');
             $table->timestamps();
         });

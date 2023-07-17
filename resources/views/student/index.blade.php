@@ -42,11 +42,11 @@
                  <td>{{$post->number_identity}}</td>
                  <td>{{$post->gender}}</td>
                  <td>{{$post->nationality->name}}</td>
-                 <td>{{$post->parents->name}}</td>
+                 <td>{{$post->guardi->name}}</td>
                  <td>{{$post->previous_save}}</td>
                  <td>{{$post->date_Join}}</td>
                  <td>{{$post->quran_episod->name}}</td>
-                 <td>{{$post->userss->name}}</td>
+                 {{--  <td>{{$post->userss->name}}</td>  --}}
                  <td><img src="{{$post->image}}" width="80" height="70"></td>
                  <td>{{$post->birth_date}}</td>
 

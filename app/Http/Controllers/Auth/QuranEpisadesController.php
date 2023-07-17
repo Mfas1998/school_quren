@@ -2,14 +2,16 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Models\teacher;
-use App\Models\period;
 use App\Models\sex;
-use App\Models\system_episod;
-use App\Models\quran_episodes;
+use App\Models\gender;
+use App\Models\period;
+use App\Models\teacher;
 use Illuminate\Http\Request;
+use App\Models\system_episod;
 
+use App\Models\quran_episodes;
 use Illuminate\Support\Facades\DB;
+
 class QuranEpisadesController extends Controller
 {
     /**
@@ -30,7 +32,8 @@ class QuranEpisadesController extends Controller
     {
         $teacher=teacher::all();
         $system_episodes=system_episod::all();
-        return view('quran.episades',compact('teacher','system_episodes'));
+        $gender=gender::all();
+        return view('quran.episades',compact('teacher','system_episodes','gender'));
     }
 
     /**
@@ -43,7 +46,7 @@ class QuranEpisadesController extends Controller
             'name'=>$request->name,
             'teacher_id'=>$request->teacher_id,
             'period'=>$request->period,
-            'gender'=>$request->gender,
+            'gender_id'=>$request->gender,
             'system_episoded_id'=>$request->system_episoded_id,
         ]);
       // return response(content: 'تم الاضافة بنجاح');
@@ -66,7 +69,8 @@ class QuranEpisadesController extends Controller
         $post =quran_episodes::find($post );
         $teacher=teacher::all();
         $system_episodes=system_episod::all();
-       return view('quran.edit',compact('post','teacher','system_episodes'));
+        $gender=gender::all();
+       return view('quran.edit',compact('post','teacher','system_episodes','gender'));
       }
 
     public function update(Request $request, $id)
@@ -78,7 +82,7 @@ class QuranEpisadesController extends Controller
                 'name'=>$request->name,
                 'teacher_id'=>$request->teacher_id,
                 'period'=>$request->period,
-                'gender'=>$request->gender,
+                'gender_id'=>$request->gender,
                 'system_episoded_id'=>$request->system_episoded_id,
         ]);
 

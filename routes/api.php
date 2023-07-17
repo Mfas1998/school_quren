@@ -1,14 +1,16 @@
 <?php
 
 // use Illuminate\Http\Request;
-// use ApiParantsLogen;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Api\ApiTeacherlogen;
+use App\Http\Controllers\Api\ApiStudentlogen;
+
 use App\Http\Controllers\Api\AuthController;
-use App\Http\Controllers\Api\ApiParantsLogen;
+// use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Api\UserController;
 // use App\Http\Controllers\Auth\LoginController;
-use App\Http\Controllers\Api\ApiStudentlogen;
-use App\Http\Controllers\Api\ApiTeacherlogen;
+// use App\Http\Controllers\Api\ApiStudentlogen;
+// use App\Http\Controllers\Api\ApiTeacherlogen;
 use App\Http\Controllers\Api\StudentController;
 use App\Http\Controllers\Api\TeacherController;
 use App\Http\Controllers\Api\GuardianController;
@@ -25,14 +27,24 @@ Route::group([
 'prefix' => 'auth'
 ], function ($router) {
 Route::post('/logein', [ApiStudentlogen::class, 'logein']);
-Route::post('/loginParant', [ApiParantsLogen::class, 'loginParant']);
-Route::post('/login', [ApiTeacherlogen::class, 'logidn']);
-
+Route::post('/teacherregister', [ApiStudentlogen::class, 'registeer']);
 Route::post('/logout', [ApiStudentlogen::class, 'logout']);
 Route::post('/refresh', [ApiStudentlogen::class, 'refresh']);
 Route::get('/user-profile', [ApiStudentlogen::class, 'userProfile']);
 Route::post('/users/{id}', [ApiStudentlogen::class, 'update']);
 });
+Route::group([
+    'middleware'=>'api',
+'prefix' => 'auth'
+], function ($router) {
+Route::post('/login', [ApiTeacherlogen::class, 'logidn']);
+Route::post('/teacherregister', [ApiTeacherlogen::class, 'registeer']);
+Route::post('/logout', [ApiTeacherlogen::class, 'logout']);
+Route::post('/refresh', [ApiTeacherlogen::class, 'refresh']);
+Route::get('/user-profile', [ApiTeacherlogen::class, 'userProfile']);
+Route::post('/users/{id}', [ApiTeacherlogen::class, 'update']);
+});
+
 Route::middleware(['jwt_verify'])->controller( StudentController::class)->group( function () {
     Route::get('student/insert', 'create');
 Route::post('student/store', 'store');

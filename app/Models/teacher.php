@@ -2,23 +2,32 @@
 
 namespace App\Models;
 
-use App\Models\nationality;
+use App\Models\Job;
+use App\Models\gender;
 use App\Models\identity;
-use App\Models\User;
-use App\Models\type_users;
-use App\Models\Qualification_study;
+use App\Models\nationality;
 use App\Models\quran_episodes;
+use Laravel\Sanctum\HasApiTokens;
+use App\Models\Qualification_study;
+use Tymon\JWTAuth\Contracts\JWTSubject;
+use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class teacher extends Model
+class Teacher extends Authenticatable implements JWTSubject
 {
-    use HasFactory;
-    protected $table ='teachers';
+
+    use HasFactory,HasApiTokens, Notifiable;
+    public function getJWTIdentifier() {
+        return $this->getKey();
+    }
+    public function getJWTCustomClaims() {
+        return [];
+    }
+    // protected $table ='teachers';
     protected $fillable =[
         'id',
         'name',
-        'qualification',
         'work',
         'salary',
         'teaching_years',
@@ -26,15 +35,16 @@ class teacher extends Model
         'address',
         'identity_id',
         'number_identity',
-        'gender',
+        'gender_id',
         'nationality_id',
         'birth_date',
         'qualification_study_id',
-        'users_id',
+        'email',
+        'phone',
+        'password',
+        'job_id', ];
 
-               ];
-
-               public function  identity(){
+            public function  identity(){
                 return $this->belongsTo(identity::class,'identity_id','id');
             }
 
@@ -48,10 +58,12 @@ class teacher extends Model
             public function quran_episades(){
                 return $this ->hasMany(quran_episodes::class,'teacher_id','id');
             }
-            public function  userss(){
-                return $this->belongsTo(User::class,'users_id','id');
+            public function  job(){
+                return $this->belongsTo(Job::class,'job_id','id');
             }
-            // public function  tybe_userss(){
-            //     return $this->belongsTo(type_users::class,'type_users_id','id');
-            // }
+            public function  gender(){
+                return $this->belongsTo(gender::class,'gender_id','id');
+            }
+
+
 }

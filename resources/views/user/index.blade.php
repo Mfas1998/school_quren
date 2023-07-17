@@ -19,8 +19,8 @@
 
                @foreach ($users as $post)
                <tr>
-                 <td>{{$post->id}}</td>
-                 <td>{{$post->name}}</td>
+                   <td>{{$post->id}}</td>
+                   <td>{{$post->name}}</td>
                  <td>{{$post->email}}</td>
                  <td>{{$post->phone}}</td>
                  <td>{{$post->password}}</td>

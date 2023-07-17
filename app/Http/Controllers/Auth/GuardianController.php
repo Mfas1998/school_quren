@@ -4,9 +4,12 @@ namespace App\Http\Controllers\Auth;
 // use App\Models\sex;
 // use App\Models\sexual;
 use App\Models\User;
+use App\Models\gender;
 use App\Models\guardian;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
+
 class GuardianController extends Controller
 {
     /**
@@ -29,9 +32,8 @@ class GuardianController extends Controller
     public function create()
     {
         // return view('parent.insert');
-       $userss=user::all();
-        
-        return view('parent.insert',compact('userss'));
+        $post=gender::all();
+        return view('parent.insert',compact('post'));
 
     }
 
@@ -41,16 +43,19 @@ class GuardianController extends Controller
     public function store(Request $request)
     {
         // return $request;
-        guardian::insert([
+        guardian::create([
                 'name'=>$request->name,
-            'gender'=>$request->gender,
-            'job'=>$request->job,
-            'link_kinship'=>$request->link_kinship,
-            'social_status'=>$request->social_status,
-            'users_id'=>$request->users_id,]);
+                'gender_id'=>$request->gender_id,
+                'job'=>$request->job,
+                'social_status'=>$request->social_status,
+                'email'=>$request->email,
+                'phone'=>$request->phone,
+                // 'password'=>$request->password,
+                'password' => bcrypt($request->password),
+            ]);
 
         //  return response(content: 'تم الاضافة بنجاح');
-       return redirect()->route('parent.index');
+         return redirect()->route('parent.index');
     }
 
     /**
@@ -67,9 +72,9 @@ class GuardianController extends Controller
     public function edit($post)
     {
         $post=guardian::find($post);
-        $userss=user::all();
+        $gender=gender::all();
 
-        return view( 'parent.edit', compact('userss','post'));
+        return view( 'parent.edit', compact('gender','post'));
 
     }
 
@@ -78,16 +83,17 @@ class GuardianController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $userss=user::find($request->users_id);
+        $type_gender=gender::find($request->gender_id);
         // $type_users=sex::find($request->sex_id);
         // $type_users=sexual::find($request->sexual_id);
         guardian::where('id',$id)->update([
             'name'=>$request->name,
-        'gender'=>$request->gender,
-        'job'=>$request->job,
-        'link_kinship'=>$request->link_kinship,
-        'social_status'=>$request->social_status,
-        'users_id'=>$request->users_id,]);
+            'gender_id'=>$request->gender_id,
+            'job'=>$request->job,
+            'social_status'=>$request->social_status,
+            'email'=>$request->email,
+            'phone'=>$request->phone,
+            'password'=>Hash::make($request->password)]);
         //  $type_users= DB::table(table:'parents')->where('id',$id)->update([
         //     'Name_parents'=>$request->Name_parents,
 
@@ -112,11 +118,15 @@ class GuardianController extends Controller
      */
     public function destroy($id)
     {
-        DB::table('guardian')->where( 'id',$id)->delete();
-        return redirect()->route('parent.index');
+        DB::table('guardians')->where( 'id',$id)->delete();
+            return redirect()->route('parent.index');
+
+
+
+
     }
     public function deleteTruncate(){
-        DB::table(table:'guardian')->Truncate();
+        DB::table(table:'guardians')->Truncate();
         return redirect()->route('parent.index');
 
      }

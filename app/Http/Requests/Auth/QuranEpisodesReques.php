@@ -25,7 +25,7 @@ class QuranEpisodesReques extends FormRequest
             'name'=>'required|string|max:255',
             'teacher_id'=>'required|integer',
             'period'=>'required|digits:1',
-            'gender'=>'required|digits:1',
+            'gender_id'=>'required|digits:1',
             'system_episoded_id'=>'required|integer',
         ];
     }

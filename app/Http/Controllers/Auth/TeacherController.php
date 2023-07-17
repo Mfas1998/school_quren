@@ -5,11 +5,12 @@ namespace App\Http\Controllers\Auth;
 use App\Models\nationality;
 use App\Models\identity;
 use App\Models\teacher;
-use App\Models\User;
-// use App\Models\type_users;
+use App\Models\Job;
+use App\Models\gender;
 use App\Models\Qualification_study;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Http\Requests\Auth\TeacherRequest;
 class TeacherController extends Controller
 {
 
@@ -23,16 +24,22 @@ class TeacherController extends Controller
     {
         $identity=identity::all();
         $nationality=nationality::all();
+        $gender=gender::all();
         $Qualification_study=Qualification_study::all();
-        $userss=User::all();
-        return view('teacher.insert',compact('identity','nationality','Qualification_study','userss'));
+        $job=Job::all();
+        return view('teacher.insert',compact('identity','nationality','gender','Qualification_study','job'));
     }
     public function store(Request $request)
     {
         // DB::table(table:'teachers')->insert(
-            teacher::create([
+            teacher::create(
+                // array_merge(
+                //     $request->validated(), [
+                //         'password' => bcrypt($request->password),
+                //         // 'job_id' =>$request->job_id
+                //     ] )
+                [
             'name'=>$request->name,
-            'qualification'=>$request->qualification,
             'work'=>$request->work,
             'salary'=>$request->salary,
             'teaching_years'=>$request->teaching_years,
@@ -40,12 +47,16 @@ class TeacherController extends Controller
             'address'=>$request->address,
             'identity_id'=>$request->identity_id,
             'number_identity'=>$request->number_identity,
-            'gender'=>$request->gender,
+            'gender_id'=>$request->gender_id,
             'nationality_id'=>$request->nationality_id,
             'birth_date'=>$request->birth_date,
             'qualification_study_id'=>$request->qualification_study_id,
-            'users_id'=>$request->users_id,
-        ]);
+            'email'=>$request->email,
+            'phone'=>$request->phone,
+            'password'=>$request->password,
+            'job_id'=>$request->job_id,
+        ]
+    );
         // return response(content: 'تم الاضافة بنجاح');
        return redirect()->route('teacher.index');
     }
@@ -63,12 +74,13 @@ class TeacherController extends Controller
      */
     public function edit($post)
     {
-        $post=teacher::find($post);
+        $posts=teacher::find($post);
         $identity=identity::all();
         $nationality=nationality::all();
+        $gender=gender::all();
         $Qualification_study=Qualification_study::all();
-        $userss=User::all();
-        return view('teacher.edit',compact('identity','nationality','Qualification_study','userss','post'));
+        $job=Job::all();
+        return view('teacher.edit',compact('identity','nationality','gender','Qualification_study','job','posts'));
         // $post = DB::table(table:'teachers')->where( 'id',$id)->first();
             // return response(content: 'تم الاضافة بنجاح');
     //return $post;
@@ -81,13 +93,12 @@ class TeacherController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $identity=identity::find($request->identity_id);
-        $nationality=nationality::find($request->nationality_id);
-        $Qualification_study=Qualification_study::find($request->qualification_study_id);
-        $userss=User::find($request->users_id);
+        // $identity=identity::find($request->identity_id);
+        // $nationality=nationality::find($request->nationality_id);
+        // $Qualification_study=Qualification_study::find($request->qualification_study_id);
+        // $userss=User::find($request->users_id);
         teacher::where('id',$id)->update([
             'name'=>$request->name,
-            'qualification'=>$request->qualification,
             'work'=>$request->work,
             'salary'=>$request->salary,
             'teaching_years'=>$request->teaching_years,
@@ -95,15 +106,18 @@ class TeacherController extends Controller
             'address'=>$request->address,
             'identity_id'=>$request->identity_id,
             'number_identity'=>$request->number_identity,
-            'gender'=>$request->gender,
+            'gender_id'=>$request->gender_id,
             'nationality_id'=>$request->nationality_id,
             'birth_date'=>$request->birth_date,
             'qualification_study_id'=>$request->qualification_study_id,
-            'users_id'=>$request->users_id,
+            'email'=>$request->email,
+            'phone'=>$request->phone,
+            'password'=>$request->password,
+            'job_id'=>$request->job_id,
         ]);
         // return response(content: 'تم الاضافة بنجاح');
        return redirect()->route('teacher.index');
-        
+
 
     //  return response(content: 'تم الاضافة بنجاح');
        return redirect()->route('teacher.index');

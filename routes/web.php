@@ -1,11 +1,15 @@
 <?php
-use App\Http\Controllers\Auth\SexController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Auth\QuranEpisadesController;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\GenderController;
+use App\Http\Controllers\Auth\SexController;
+use App\Http\Controllers\Auth\UserController;
+use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Auth\StudentController;
 use App\Http\Controllers\Auth\TeacherController;
 use App\Http\Controllers\Auth\GuardianController;
-use App\Http\Controllers\Auth\StudentController;
-use App\Http\Controllers\Auth\UserController;
+use App\Http\Controllers\Auth\QuranEpisadesController;
+
 
 /*
 
@@ -18,10 +22,33 @@ use App\Http\Controllers\Auth\UserController;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+Route::get('/s', [HomeController::class,'index'])->name('selection');
+Route::group(['namespace' => 'Auth'], function () {
+    Route::get('/login/{type}', [LoginController::class,'loginForm'])->middleware('guest')->name('login.show');
+    Route::post('/login', [LoginController::class,'login'])->name('login');
+    // Route::get('/login/{type}', [LoginController::class,'logout'])->name('logout');
 
-Route::get('/', function () {
-    return view('welcome');
+
+    // Route::get('/login/{type}', 'LoginController@loginForm')->middleware('guest')->name('login');
+    // Route::post('/login', 'LoginController@login')->name('login');
+    // Route::get('/logout/{type}', 'LoginController@logout')->name('logout');
+
+
 });
+//==============================Translate all pages============================
+Route::group(
+    [
+        'prefix' => LaravelLocalization::setLocale(),
+        'middleware' => ['localeSessionRedirect', 'localizationRedirect', 'localeViewPath', 'auth']
+    ], function () {
+
+    //==============================dashboard============================
+    Route::get('/dashboard', [HomeController::class,'dashboard'])->name('dashboard');
+    });
+// Route::get('/logout', 'LoginController@logout')->name('logout');
+// // Route::get('/', function () {
+// //     return view('welcome');
+// });
 Route::resource('sex', SexController::class);
 
 Route::controller(QuranEpisadesController::class)->group( function ($id) {
@@ -36,13 +63,11 @@ Route::get('quran/delete/all/Truncate','deleteTruncate')->name(name: 'quran.dele
 
 });
 
-
-Route::get('student',function(){
-    return 'hello student';
-})->middleware('auth');
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('student',function(){ //     return 'hello student';
+// })->middleware('auth');
+// Route::get('/', function () {
+//     return view('welcome');
+// });
 
 Route::controller(TeacherController::class)->group( function ($id) {
 Route::get('teacher/insert',  'create')->name(name: 'teacher.insert');
@@ -72,9 +97,9 @@ Route::get('student/delete/all/Truncate','deleteTruncate')->name(name: 'student.
 });
 
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
 
 Route::controller(GuardianController::class)->group( function ($id) {
 Route::get('parent/insert',  'create')->name(name: 'parent.insert');
@@ -87,9 +112,9 @@ Route::get('parent/delete/all/Truncate','deleteTruncate')->name(name: 'parent.de
 // Route::get('parent/delete/all/Truncate','deleteTruncate')->name(name: 'parent.delete.all.Truncate');
 });
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
 
 Route::controller(UserController::class)->group( function ($id) {
 Route::get('user/insert',  'create')->name(name: 'user.insert');
@@ -104,5 +129,11 @@ Route::get('user/delete/all/Truncate','deleteTruncate')->name(name: 'user.delete
 Route::get('user/softDelete','show1')->name(name: 'user.softDelete');
 });
 // Route::resource('user', UserController::class);
+
 Route::get('user/indexs', [StudentController::class ,'show'])->name(name: 'user.indexs');
 Route::get('user/indexs', [\App\Http\Controllers\TypeUserController::class ,'create'])->name( 'user.indexs');
+// Route::view('/admin_dashboard','admin.layout.master');
+Route::view('/logingggd','auth.login');
+
+// Route::get('/parent/index',[GuardianController::class ,'index'])->name(name:'parent.index');
+// Route::get('logins/ddd',[GenderController::class,'index'])->name(name:'auth.logingggd');

@@ -23,19 +23,22 @@ class TeacherRequest extends FormRequest
     {
         return [
             'name' => 'required|string|max:255',
-            'qualification' => 'required|string|max:70',
             'work' => 'required|string|max:100',
             'salary' => 'required|min:4',
-            'teaching_years' => 'sometimes|date_format:Y-m-d',
+            'teaching_years' => 'required|date_format:Y-m-d',
             'center_they_work' => 'required|string|max:100',
             'address' => 'required|string|max:50',
             'identity_id'=>'required|integer',
             'number_identity' => 'required|digits_between:5,20',
-            'gender' => 'required|digits:1',
+            'gender_id' => 'required|digits:1',
             'nationality_id'=>'required|integer',
             'birth_date' => 'required|date_format:Y-m-d',
             'qualification_study_id'=>'required|integer',
-            'users_id'=>'required|integer',
+            'email'  => 'required|string||max:100|unique:teachers',
+            'phone' => 'required|digits_between:5,20|unique:teachers,phone',
+            'password' => 'required|string|confirmed|min:6|unique:teachers,phone,password',
+            'job_id' => 'required|digits:1',
+            // 'job_id'=>'required|integer',
         ];
     }
 }

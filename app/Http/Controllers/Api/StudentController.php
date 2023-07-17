@@ -27,21 +27,16 @@ class StudentController extends Controller
     {    }
     public function store(StudenRequest $request)
     {
-
-
-
         $imageName =  $request-> image -> getClientOriginalExtension();
         $nameee=time().'.'.$imageName;
         $path='imagesfp';
         $request->image->move($path,$nameee);
+        // $users=User ::where('active', 1)->max('id');
         $students = student::create(array_merge(
             $request->validated(),
                 [
-                'image'=>$nameee,
-                ])
-
-        );
-
+                'image' =>$nameee,
+                'password' => bcrypt($request->password)    ]));
 if($students){
         return response()->json([
             'message' => 'students successfully registered',

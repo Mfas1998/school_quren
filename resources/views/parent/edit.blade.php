@@ -1,40 +1,58 @@
-<h1>The update</h1>
+
+@extends('admin.layout.master')
+@section('content')
 <!DOCTYPE html>
-<html lang="en">
+<html class="no-js" lang="en" dir="ltr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>:: My-Task:: Tickets</title>
+    <link rel="icon" href="{{asset('/favicon.ico')}}" type="image/x-icon"> <!-- Favicon-->
+    <!-- plugin css file  -->
+    <link rel="stylesheet" href="{{asset('/assets/css/dataTables.bootstrap5.min.css')}}">
+    <!-- project css file  -->
+    <link rel="stylesheet" href="{{asset('/assets/css/my-task.style.min.css')}}">
 </head>
 <body>
-<form action="{{route('parent.update',$post->id)}}" method="post">
-    {{--  @method('PUT')  --}}
-@csrf
-<label>أسم المستخدم</label><br>
-    <input type="text" name="name" value="{{$post->name}}"><br>
-    <label>الجنس</label><br>
-    <input type="text" name="gender" value="{{$post->gender}}"><br>
-    <br><br><label>الوضيفة</label><br>
-    <input type="text" name="job" value="{{$post->job}}"><br>
-    <br><br><label>صلة الرحم</label><br>
-    <input type="text" name="link_kinship" value="{{$post->link_kinship}}"><br>
-    <label>حالة الاب</label><br>
-    <input type="text" name="social_status" value="$post->social_status"><br>
-    <br>
-    {{--  <input type="text" name="users_id"><br>  --}}
+    <!-- Add Tickit-->
+        <div class="body d-flex py-lg-3 py-md-2">
+            <div class="container-xxl">
+                <div class="modal-header"><h5 class="modal-title  fw-bold" >Edit Guardian </h5>
+                    {{--  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>  --}}
+                </div>
+                <div class="row clearfix g-3">
+                <div class="col-sm-12">
+                <div class="card mb-3">
+                <div class="card-body">
+            <form action="{{route('parent.update',$post->id)}}" method="post">
+                @csrf
+                {{--  @method('PUT')  --}}
+                    <div class="row g-3 mb-5"><div class="col"> <label for="depone" class="form-label">ألاسم</label>
+                         <input type="text" name="name" value="{{$post->name}}" class="form-control"></div>
+                            <div class="col"><label for='exampleInputEmaill' class="form-label">الجنس</label>
+                                <select class="form-control form-select" name='gender_id'>
+                                            @foreach($gender as $type_gender)
+                                            <option value="{{$type_gender->id}}" value"{{$post->gender->name == $type_gender->name ? 'selected':' '}}">{{$type_gender->name}}</option>
+                                            @endforeach</select></div></div>
+                    <div class="row g-3 mb-5"><div class="col"><label for="depone" class="form-label">الوظيفة</label>
+                        <input type="text" name="job" value="{{$post->job}}" class="form-control"></div>
+                        <div class="col "><label for="depone" class="form-label">الحالة الاجتماعية</label> <input type="text" name="social_status" value="{{$post->social_status}}" class="form-control"></div></div>
+                    <div class="row g-3 mb-5"><div class="col"><label for="depone" class="form-label">الايميل </label><input type="text" name="email" value="{{$post->email}}" class="form-control"></div>
+                        <div class="col "><label for="depone" class="form-label">رقم الجوال </label><input type="text" name="phone" value="{{$post->phone}}" class="form-control"></div></div>
+                    <div class="row g-3 mb-5"><div class="col"><label for="depone" class="form-label"> كلمة السر</label><input type="text" name="password" value="{{$post->password}}" class="form-control"></div>
+                        </div>
+                    <div class="modal-footer"><button type="submit" class="btn btn-secondary">Update</button> <button type="button" class="btn btn-primary">Create</button></div>
+            </form>
+                </div> </div></div></div><!-- Row End --> </div></div>
 
-<div class='form-group'>
-     <label for='exampleInputEmaill'>المسخدم</label>
-    <select class="form-control"name='users_id'>
-   @foreach($userss as $type_user)
-     <option value="{{$type_user->id}}"{{$post->users_id == $type_user->id ? 'selected':' '}}>{{ $type_user->name }}</option>
-  @endforeach
-    </select>
-</div><br>
- <button type="submit">updaterInsert</button>
-
-
-</form>
+<!-- Jquery Core Js -->
+<script src="{{asset('/assets/bundles/libscripts.bundle.js')}}"></script>
+<!-- Plugin Js-->
+<script src="{{asset('/assets/bundles/dataTables.bundle.js')}}"></script>
 </body>
 </html>
+<head>
+@endsection
+
+

@@ -1,14 +1,15 @@
 <?php
 
 namespace App\Http\Controllers\Auth;
-use App\Models\User;
-use App\Models\parents;
+use App\Models\quran_episades;
+use App\Models\gender;
+// use App\Models\parents;
 use App\Models\student;
 use App\Models\guardian;
 use App\Models\identity;
 use App\Models\nationality;
-use Illuminate\Http\Request;
 // use App\Models\type_users;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\Qualification_study;
 use App\Http\Requests\Auth\StudenRequest;
@@ -89,12 +90,12 @@ class StudentController extends Controller
     {
         $post=student::find($post);
         $identity=identity::all();
-        $sex=sex::all();
-        $sexual=sexual::all();
-        $parents=parents::all();
-        $quran_episades=quran_episades::all();
+        $sex=gender::all();
+        $sexual=nationality::all();
+        $parents=guardian::all();
+        $quran_episad=quran_episad::all();
 
-        return view( 'student.edit', compact('post','identity','sex','sexual','parents','quran_episades'));
+        return view( 'student.edit', compact('post','identity','sex','sexual','parents','quran_episad'));
 //         $post = DB::table(table:'students')->where( 'id',$id)->first();
 //          //    return response(content: 'تم الاضافة بنجاح');
 //     //return $post;

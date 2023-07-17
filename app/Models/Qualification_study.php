@@ -10,7 +10,7 @@ class Qualification_study extends Model
     protected $table ='qualification_studies';
     protected $fillable =[
         'id',
-         'name_qualification',
+         'name',
  ];
     use HasFactory;
 
