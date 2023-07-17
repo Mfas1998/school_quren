@@ -2,7 +2,6 @@
 namespace App\Models;
 use App\Models\gender;
 use App\Models\Parant;
-use App\Models\guardian;
 use App\Models\identity;
 use App\Models\nationality;
 use App\Models\Daily_Business;

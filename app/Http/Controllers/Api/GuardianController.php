@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Api\ApiResponseTrait;
 use App\Http\Controllers\Controller;
-use App\Models\guardian;
+use App\Models\Parant;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 // use App\Http\Resources\Userreso;
@@ -14,7 +14,7 @@ class GuardianController extends Controller
     public function index()
     {
 
-        $guardian=guardian::get();
+        $guardian=Parant::get();
         return response()->json([
             'message' => 'User successfully registered',
             'user' => $guardian
@@ -32,7 +32,7 @@ class GuardianController extends Controller
         //         'guardian' => null
         //     ], 400);
 
-        $guardian = guardian::create(
+        $guardian = Parant::create(
             array_merge( $request->validated(),
                 ['password' => bcrypt($request->password)] ));
 
@@ -48,7 +48,7 @@ class GuardianController extends Controller
 
     public function show(string $id)
     {
-        $guardian = guardian::find($id);
+        $guardian = Parant::find($id);
         if($guardian){
             return response()->json([
                 'message' => 'guardian not id successfully registered',
@@ -80,7 +80,7 @@ class GuardianController extends Controller
         if($validator->fails()){
             return response()->json($validator->errors()->toJson(), 400);
         }
-        $guardian = guardian::find($id);
+        $guardian = Parant::find($id);
         if(!$guardian){
             return response()->json([
                 'message' => 'guardian not id successfully registered',
@@ -107,7 +107,7 @@ class GuardianController extends Controller
      */
     public function destroy(string $id)
     {
-        $guardian = guardian::find($id);
+        $guardian = Parant::find($id);
         if(!$guardian){
             return response()->json([
                 'message' => 'guardian not id successfully registered',
@@ -128,7 +128,7 @@ class GuardianController extends Controller
     }
     public function deleteTruncate(string $id)
     {
-        $guardian = guardian::Truncate();;
+        $guardian = Parant::Truncate();;
 
             if($guardian){return response()->json([
                 'message' => 'guardian successfully registered',

@@ -5,7 +5,7 @@ namespace App\Models;
 use App\Models\Parant;
 use App\Models\student;
 use App\Models\teacher;
-use App\Models\guardian;
+use App\Models\Parant;
 use App\Models\quran_episodes;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;

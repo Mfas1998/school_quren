@@ -1,16 +1,13 @@
 <?php
 
-// use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Api\ApiTeacherlogen;
-use App\Http\Controllers\Api\ApiStudentlogen;
 
+use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AuthController;
-// use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Api\ApiParantsLogen;
 use App\Http\Controllers\Api\UserController;
 // use App\Http\Controllers\Auth\LoginController;
-// use App\Http\Controllers\Api\ApiStudentlogen;
-// use App\Http\Controllers\Api\ApiTeacherlogen;
+use App\Http\Controllers\Api\ApiStudentlogen;
+use App\Http\Controllers\Api\ApiTeacherlogen;
 use App\Http\Controllers\Api\StudentController;
 use App\Http\Controllers\Api\TeacherController;
 use App\Http\Controllers\Api\GuardianController;
@@ -27,7 +24,7 @@ Route::group([
 'prefix' => 'auth'
 ], function ($router) {
 Route::post('/logein', [ApiStudentlogen::class, 'logein']);
-Route::post('/teacherregister', [ApiStudentlogen::class, 'registeer']);
+Route::post('/loginParant', [ApiParantsLogen::class, 'loginParant']);
 Route::post('/logout', [ApiStudentlogen::class, 'logout']);
 Route::post('/refresh', [ApiStudentlogen::class, 'refresh']);
 Route::get('/user-profile', [ApiStudentlogen::class, 'userProfile']);

@@ -66,7 +66,7 @@ return [
             'provider' => 'users',
             'hash' => false,
         ],
-        'guardian' => [
+        'Parant' => [
             'driver' => 'jwt',
             'provider' => 'guardians',
         ],
@@ -108,7 +108,7 @@ return [
         ],
         'guardians' => [
             'driver' => 'eloquent',
-            'model' => App\Models\guardian::class,
+            'model' => App\Models\Parant::class,
         ],
         'teachers' => [
             'driver' => 'eloquent',
